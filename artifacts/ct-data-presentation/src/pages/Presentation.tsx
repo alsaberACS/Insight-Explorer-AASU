@@ -6,7 +6,6 @@ import { Progress } from "@/components/ui/progress";
 import { useHeartData } from "@/hooks/use-heart-data";
 
 import TitleSlide from "@/components/slides/TitleSlide";
-import CTPollSlide from "@/components/slides/CTPollSlide";
 import DefinitionsSlide from "@/components/slides/DefinitionsSlide";
 import DataEcosystemSlide from "@/components/slides/DataEcosystemSlide";
 import MethodologiesSlide from "@/components/slides/MethodologiesSlide";
@@ -25,7 +24,6 @@ import ClosingSlide from "@/components/slides/ClosingSlide";
 
 const SLIDES = [
   TitleSlide,
-  CTPollSlide,
   DefinitionsSlide,
   DataEcosystemSlide,
   MethodologiesSlide,
