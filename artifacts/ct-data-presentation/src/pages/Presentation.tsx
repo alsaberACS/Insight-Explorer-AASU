@@ -8,6 +8,9 @@ import { useHeartData } from "@/hooks/use-heart-data";
 import TitleSlide from "@/components/slides/TitleSlide";
 import CTIntroSlide from "@/components/slides/CTIntroSlide";
 import CTPollSlide from "@/components/slides/CTPollSlide";
+import DataEcosystemSlide from "@/components/slides/DataEcosystemSlide";
+import MethodologiesSlide from "@/components/slides/MethodologiesSlide";
+import MethodologiesQuizSlide from "@/components/slides/MethodologiesQuizSlide";
 import DataIntroSlide from "@/components/slides/DataIntroSlide";
 import DataCleaningSlide from "@/components/slides/DataCleaningSlide";
 import DataTableSlide from "@/components/slides/DataTableSlide";
@@ -20,6 +23,9 @@ const SLIDES = [
   TitleSlide,
   CTIntroSlide,
   CTPollSlide,
+  DataEcosystemSlide,
+  MethodologiesSlide,
+  MethodologiesQuizSlide,
   DataIntroSlide,
   DataCleaningSlide,
   DataTableSlide,
@@ -35,6 +41,14 @@ export default function Presentation() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.closest("button, a, input, textarea, select, [contenteditable], [role='button']") ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
       if (e.key === "ArrowRight" || e.key === " ") {
         setCurrentIndex((prev) => Math.min(prev + 1, SLIDES.length - 1));
       } else if (e.key === "ArrowLeft") {
