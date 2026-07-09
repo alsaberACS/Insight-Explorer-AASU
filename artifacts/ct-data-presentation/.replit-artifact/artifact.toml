@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Computational Thinking & Data Analysis"
+version = "1.0.0"
+id = "artifacts/ct-data-presentation"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20036
+
+[services.development]
+run = "pnpm --filter @workspace/ct-data-presentation run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/ct-data-presentation", "run", "build" ]
+publicDir = "artifacts/ct-data-presentation/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20036"
+BASE_PATH = "/"
