@@ -1,0 +1,1 @@
+- [webR in-browser R sessions](webr-in-browser-r.md) — first-run boot is slow, serialize runs on the shared instance, await Shelter.purge(), prefer base R over dplyr in runnable snippets.

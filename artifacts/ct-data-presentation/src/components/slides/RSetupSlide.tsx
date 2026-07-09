@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HeartData } from "@/lib/data";
 import { Button } from "@/components/ui/button";
-import { Check, Copy } from "lucide-react";
+import RStudioPane from "@/components/RStudioPane";
 
 const R_LOAD_CODE = `# ------------------------------------------------------------
 # Heart Disease Dataset (Kaggle: johnsmith88/heart-disease-dataset)
@@ -14,8 +14,10 @@ str(heart)     # 1,025 obs. of 14 variables
 head(heart)    # peek at the first rows`;
 
 const R_CODES_CODE = `# ------------------------------------------------------------
-# Step 2: Define the codes  (turn numeric codes into labelled factors)
+# Step 2: Define the codes (turn numeric codes into labelled factors)
 # ------------------------------------------------------------
+heart <- read.csv("heart.csv")
+
 heart$sex     <- factor(heart$sex,     levels = c(0, 1),
                         labels = c("Female", "Male"))
 
@@ -46,16 +48,41 @@ heart$target  <- factor(heart$target,  levels = c(0, 1),
 summary(heart)   # labelled summary of every variable`;
 
 const R_CLEAN_CODE = `# ------------------------------------------------------------
-# Step 3: Clean before analysing  (what we discovered earlier)
+# Step 3: Clean before analysing (what we discovered earlier)
 # ------------------------------------------------------------
-library(dplyr)
+heart <- read.csv("heart.csv")
 
-heart_clean <- heart %>%
-  distinct() %>%                 # drop 723 duplicate rows: 1025 -> 302
-  filter(ca != 4) %>%            # remove invalid ca = 4 codes: 302 -> 298
-  filter(!is.na(thal))           # thal = 0 became NA (levels 1:3): 298 -> 296
+nrow(heart)                              # 1,025 raw records
 
-nrow(heart_clean)                # 296 analysis-ready records`;
+heart_clean <- heart[!duplicated(heart), ]
+nrow(heart_clean)                        # 302 after dropping duplicates
+
+heart_clean <- heart_clean[heart_clean$ca != 4, ]
+nrow(heart_clean)                        # 298 after removing invalid ca = 4
+
+heart_clean <- heart_clean[heart_clean$thal != 0, ]
+nrow(heart_clean)                        # 296 analysis-ready records`;
+
+const R_ANALYSIS_CODE = `# ------------------------------------------------------------
+# Step 4: First statistical analysis on the cleaned data
+# ------------------------------------------------------------
+heart <- read.csv("heart.csv")
+heart_clean <- heart[!duplicated(heart), ]
+heart_clean <- heart_clean[heart_clean$ca != 4 & heart_clean$thal != 0, ]
+heart_clean$target <- factor(heart_clean$target, levels = c(0, 1),
+                             labels = c("No disease", "Disease"))
+heart_clean$sex    <- factor(heart_clean$sex,    levels = c(0, 1),
+                             labels = c("Female", "Male"))
+
+# Descriptives: age by diagnosis
+tapply(heart_clean$age, heart_clean$target, summary)
+
+# t-test: is max heart rate different between groups?
+t.test(thalach ~ target, data = heart_clean)
+
+# Chi-square: is sex associated with heart disease?
+table(heart_clean$sex, heart_clean$target)
+chisq.test(table(heart_clean$sex, heart_clean$target))`;
 
 const CODEBOOK: { name: string; meaning: string; codes: string }[] = [
   { name: "age", meaning: "Age in years", codes: "29 - 77 (continuous)" },
@@ -74,46 +101,13 @@ const CODEBOOK: { name: string; meaning: string; codes: string }[] = [
   { name: "target", meaning: "Diagnosis", codes: "0 = No disease, 1 = Disease" },
 ];
 
-const STEPS = [
+const STEPS: { key: string; label: string; code?: string }[] = [
   { key: "codebook", label: "1. The Codebook" },
   { key: "load", label: "2. Load in R", code: R_LOAD_CODE },
   { key: "codes", label: "3. Define the Codes", code: R_CODES_CODE },
   { key: "clean", label: "4. Clean", code: R_CLEAN_CODE },
+  { key: "analyse", label: "5. Analyse", code: R_ANALYSIS_CODE },
 ];
-
-function CodeBlock({ code }: { code: string }) {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      // clipboard unavailable; ignore
-    }
-  };
-
-  return (
-    <div className="relative rounded-2xl bg-foreground text-background shadow-lg overflow-hidden text-left">
-      <div className="flex items-center justify-between px-4 py-2 border-b border-background/10">
-        <span className="text-xs font-mono opacity-60">R script</span>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={handleCopy}
-          className="h-7 gap-1.5 text-background hover:bg-background/10 hover:text-background"
-        >
-          {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-          <span className="text-xs">{copied ? "Copied" : "Copy"}</span>
-        </Button>
-      </div>
-      <pre className="p-5 overflow-auto max-h-[46vh] text-[13px] leading-relaxed font-mono whitespace-pre select-text">
-        {code}
-      </pre>
-    </div>
-  );
-}
 
 export default function RSetupSlide({ data }: { data: HeartData[] }) {
   const [step, setStep] = useState(0);
@@ -124,18 +118,19 @@ export default function RSetupSlide({ data }: { data: HeartData[] }) {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-8"
+        className="text-center mb-6"
       >
         <p className="text-sm uppercase tracking-[0.25em] text-primary font-semibold mb-2">
           Statistical Analysis in R
         </p>
-        <h2 className="text-5xl font-bold mb-3">Defining the Data</h2>
+        <h2 className="text-4xl md:text-5xl font-bold mb-2">Defining the Data</h2>
         <p className="text-lg text-muted-foreground">
-          Before any statistics, tell R what the {data.length} rows of numbers actually mean.
+          A live RStudio-style session — the {data.length} real records are loaded, and every
+          script actually runs.
         </p>
       </motion.div>
 
-      <div className="flex items-center justify-center gap-2 mb-6 flex-wrap">
+      <div className="flex items-center justify-center gap-2 mb-5 flex-wrap">
         {STEPS.map((s, i) => (
           <Button
             key={s.key}
@@ -186,7 +181,7 @@ export default function RSetupSlide({ data }: { data: HeartData[] }) {
               </table>
             </div>
           ) : (
-            <CodeBlock code={current.code!} />
+            <RStudioPane initialCode={current.code!} />
           )}
         </motion.div>
       </AnimatePresence>
