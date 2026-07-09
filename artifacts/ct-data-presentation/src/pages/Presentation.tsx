@@ -11,6 +11,8 @@ import DataEcosystemSlide from "@/components/slides/DataEcosystemSlide";
 import MethodologiesSlide from "@/components/slides/MethodologiesSlide";
 import MethodologiesExamplesSlide from "@/components/slides/MethodologiesExamplesSlide";
 import MethodologiesQuizSlide from "@/components/slides/MethodologiesQuizSlide";
+import VariableTypesSlide from "@/components/slides/VariableTypesSlide";
+import DataSourcesSlide from "@/components/slides/DataSourcesSlide";
 import PythonEcosystemSlide from "@/components/slides/PythonEcosystemSlide";
 import PythonFirstStepsSlide from "@/components/slides/PythonFirstStepsSlide";
 import PythonCleaningSlide from "@/components/slides/PythonCleaningSlide";
@@ -29,6 +31,8 @@ const SLIDES = [
   MethodologiesSlide,
   MethodologiesExamplesSlide,
   MethodologiesQuizSlide,
+  VariableTypesSlide,
+  DataSourcesSlide,
   PythonEcosystemSlide,
   PythonFirstStepsSlide,
   PythonCleaningSlide,
