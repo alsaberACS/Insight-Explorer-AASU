@@ -11,6 +11,7 @@ import CTPollSlide from "@/components/slides/CTPollSlide";
 import DataIntroSlide from "@/components/slides/DataIntroSlide";
 import DataCleaningSlide from "@/components/slides/DataCleaningSlide";
 import DataTableSlide from "@/components/slides/DataTableSlide";
+import RSetupSlide from "@/components/slides/RSetupSlide";
 import VizGuessSlide from "@/components/slides/VizGuessSlide";
 import VizDashboardSlide from "@/components/slides/VizDashboardSlide";
 import ClosingSlide from "@/components/slides/ClosingSlide";
@@ -22,6 +23,7 @@ const SLIDES = [
   DataIntroSlide,
   DataCleaningSlide,
   DataTableSlide,
+  RSetupSlide,
   VizGuessSlide,
   VizDashboardSlide,
   ClosingSlide,
