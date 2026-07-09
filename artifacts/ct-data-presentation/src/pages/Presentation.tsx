@@ -8,8 +8,10 @@ import { useHeartData } from "@/hooks/use-heart-data";
 import TitleSlide from "@/components/slides/TitleSlide";
 import CTIntroSlide from "@/components/slides/CTIntroSlide";
 import CTPollSlide from "@/components/slides/CTPollSlide";
+import DefinitionsSlide from "@/components/slides/DefinitionsSlide";
 import DataEcosystemSlide from "@/components/slides/DataEcosystemSlide";
 import MethodologiesSlide from "@/components/slides/MethodologiesSlide";
+import MethodologiesExamplesSlide from "@/components/slides/MethodologiesExamplesSlide";
 import MethodologiesQuizSlide from "@/components/slides/MethodologiesQuizSlide";
 import DataIntroSlide from "@/components/slides/DataIntroSlide";
 import DataCleaningSlide from "@/components/slides/DataCleaningSlide";
@@ -23,8 +25,10 @@ const SLIDES = [
   TitleSlide,
   CTIntroSlide,
   CTPollSlide,
+  DefinitionsSlide,
   DataEcosystemSlide,
   MethodologiesSlide,
+  MethodologiesExamplesSlide,
   MethodologiesQuizSlide,
   DataIntroSlide,
   DataCleaningSlide,

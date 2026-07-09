@@ -7,7 +7,7 @@ const ROLES = [
     id: "analyst",
     title: "Data Analyst",
     discipline: "Data Analysis",
-    description: "Exploring and investigating data to discover hidden facts and patterns for business/policy decisions. Purpose: optimize operations, profits, effectiveness.",
+    description: "Focuses on optimizing operations, profits, and effectiveness by turning data into actionable insights.",
     tasks: "Answers business questions with reports, dashboards, and EDA (Exploratory Data Analysis).",
     skills: [
       "EDA",
@@ -22,7 +22,7 @@ const ROLES = [
     id: "scientist",
     title: "Data Scientist",
     discipline: "Data Science",
-    description: "Multidisciplinary field combining domain expertise, computer science, and statistics. Builds prediction models (fraud detection, disease prediction, recommendations).",
+    description: "Applies advanced modeling techniques to solve complex, open-ended problems and predict future outcomes.",
     tasks: "Builds predictive and statistical models for open-ended problems. The \"jack of all trades\".",
     skills: [
       "Mathematics & Statistics",
@@ -37,7 +37,7 @@ const ROLES = [
     id: "engineer",
     title: "Data Engineer",
     discipline: "Data Engineering",
-    description: "Ingesting, processing, organizing, and storing data. Builds automated data pipelines, ETL/ELT, data warehouses, and data lakes.",
+    description: "Architects the infrastructure required to support data generation, storage, and retrieval at scale.",
     tasks: "Builds and maintains robust data pipelines and scalable platforms.",
     skills: [
       "SQL & Relational DBs",
@@ -61,7 +61,7 @@ export default function DataEcosystemSlide({ data }: { data: HeartData[] }) {
           animate={{ opacity: 1, y: 0 }}
           className="text-3xl md:text-4xl font-bold mb-3"
         >
-          The Data Ecosystem
+          The People: Job Roles & Skills
         </motion.h2>
         <motion.p 
           initial={{ opacity: 0 }}
@@ -69,7 +69,7 @@ export default function DataEcosystemSlide({ data }: { data: HeartData[] }) {
           transition={{ delay: 0.2 }}
           className="text-base md:text-lg text-muted-foreground max-w-4xl mx-auto"
         >
-          Three disciplines working together. Analysts draw interpretations from historical data, scientists predict future events, and engineers lay the groundwork with accurate data preparation.
+          How these disciplines translate into daily work and required expertise.
         </motion.p>
       </div>
 
