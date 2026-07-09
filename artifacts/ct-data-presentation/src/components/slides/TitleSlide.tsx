@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { HeartData } from "@/lib/data";
+import bookCover from "@assets/Screenshot_2026-07-09_at_9.48.38_PM_1783622946840.png";
 
 interface SlideProps {
   data: HeartData[];
@@ -7,27 +8,49 @@ interface SlideProps {
 
 export default function TitleSlide({ data }: SlideProps) {
   return (
-    <div className="w-full max-w-6xl mx-auto h-full flex flex-col justify-center gap-12">
-      <div className="space-y-6">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary"
+    <div className="w-full max-w-6xl mx-auto h-full flex flex-col justify-center gap-10">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+        <div className="space-y-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary"
+          >
+            Data Science Fundamentals
+          </motion.div>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="text-5xl md:text-7xl font-bold tracking-tight text-foreground leading-tight"
+          >
+            Computational<br/>
+            Thinking &<br/>
+            <span className="text-primary">Data Analysis</span>
+          </motion.h1>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5 }}
+          className="flex flex-col items-center gap-3 shrink-0"
         >
-          Data Science Fundamentals
+          <div className="text-xs uppercase tracking-[0.25em] text-primary font-semibold">
+            Recommended Book
+          </div>
+          <img
+            src={bookCover}
+            alt="Python Data Analysis, Fourth Edition, by Avinash Navlani and Cornellius Yudha Wijaya"
+            className="w-44 md:w-56 rounded-lg shadow-xl border border-border/50 rotate-1 hover:rotate-0 transition-transform"
+          />
+          <div className="text-sm text-muted-foreground text-center max-w-[15rem] leading-snug">
+            Python Data Analysis (4th ed.)<br/>
+            Navlani & Wijaya, Packt
+          </div>
         </motion.div>
-        
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="text-6xl md:text-8xl font-bold tracking-tight text-foreground leading-tight"
-        >
-          Computational<br/>
-          Thinking &<br/>
-          <span className="text-primary">Data Analysis</span>
-        </motion.h1>
       </div>
 
       <motion.div 
