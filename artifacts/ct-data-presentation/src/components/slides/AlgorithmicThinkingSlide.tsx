@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Download } from "lucide-react";
+import { Download, ExternalLink } from "lucide-react";
 import { HeartData } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import RStudioPane from "@/components/RStudioPane";
@@ -104,6 +104,19 @@ export default function AlgorithmicThinkingSlide({ data: _data }: { data: HeartD
             >
               <Download className="w-4 h-4" />
               Variable codebook
+            </motion.a>
+            <motion.a
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              href="https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 text-primary px-4 py-2 text-sm font-semibold hover:bg-primary/20 transition-colors"
+              aria-label="Open the heart disease dataset page on Kaggle"
+            >
+              <ExternalLink className="w-4 h-4" />
+              Kaggle source
             </motion.a>
           </div>
         </div>
