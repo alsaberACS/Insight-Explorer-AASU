@@ -30,7 +30,6 @@ import DataHostingSlide from "@/components/slides/DataHostingSlide";
 import DataCleaningLabSlide from "@/components/slides/DataCleaningLabSlide";
 import DataWranglingSlide from "@/components/slides/DataWranglingSlide";
 import DataManagementSlide from "@/components/slides/DataManagementSlide";
-import DataSourcesSlide from "@/components/slides/DataSourcesSlide";
 import EDAIntroSlide from "@/components/slides/EDAIntroSlide";
 import LocationSlide from "@/components/slides/LocationSlide";
 import DispersionSlide from "@/components/slides/DispersionSlide";
@@ -71,7 +70,6 @@ const SLIDES = [
   DataCleaningLabSlide,
   DataWranglingSlide,
   DataManagementSlide,
-  DataSourcesSlide,
   EDAIntroSlide,
   LocationSlide,
   DispersionSlide,
