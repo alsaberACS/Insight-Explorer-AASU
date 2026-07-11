@@ -35,11 +35,6 @@ import GoalFiveSlide from "@/components/slides/GoalFiveSlide";
 import EDAIntroSlide from "@/components/slides/EDAIntroSlide";
 import LocationSlide from "@/components/slides/LocationSlide";
 import DispersionSlide from "@/components/slides/DispersionSlide";
-import PythonEcosystemSlide from "@/components/slides/PythonEcosystemSlide";
-import PythonFirstStepsSlide from "@/components/slides/PythonFirstStepsSlide";
-import PythonCleaningSlide from "@/components/slides/PythonCleaningSlide";
-import DataIntroSlide from "@/components/slides/DataIntroSlide";
-import DataCleaningSlide from "@/components/slides/DataCleaningSlide";
 import DataTableSlide from "@/components/slides/DataTableSlide";
 import RSetupSlide from "@/components/slides/RSetupSlide";
 import VizGuessSlide from "@/components/slides/VizGuessSlide";
@@ -76,11 +71,6 @@ const SLIDE_DEFS: { component: (props: { data: import("@/lib/data").HeartData[] 
   { component: EDAIntroSlide, title: "Exploratory Data Analysis" },
   { component: LocationSlide, title: "Measures of Location" },
   { component: DispersionSlide, title: "Measures of Dispersion" },
-  { component: PythonEcosystemSlide, title: "The Python Ecosystem" },
-  { component: PythonFirstStepsSlide, title: "First Steps in Python" },
-  { component: PythonCleaningSlide, title: "Cleaning in Python" },
-  { component: DataIntroSlide, title: "The Reality of Data" },
-  { component: DataCleaningSlide, title: "Finding the Flaws" },
   { component: DataTableSlide, title: "The Data Table" },
   { component: RSetupSlide, title: "Defining the Data" },
   { component: VizGuessSlide, title: "Guess the Chart" },
@@ -97,8 +87,8 @@ const SECTIONS: SlideSection[] = [
   { label: "Goal 2 · Methodologies", start: 7, count: 5 },
   { label: "Goal 3 · Computational Thinking & R", start: 12, count: 5 },
   { label: "Goal 4 · Dealing with Data", start: 17, count: 8 },
-  { label: "Goal 5 · EDA & Visualization", start: 25, count: 13 },
-  { label: "Wrap-Up", start: 38, count: 1 },
+  { label: "Goal 5 · EDA & Visualization", start: 25, count: 8 },
+  { label: "Wrap-Up", start: 33, count: 1 },
 ];
 
 const STAGE_W = 1280;
