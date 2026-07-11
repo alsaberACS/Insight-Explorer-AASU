@@ -15,11 +15,13 @@ const EXAMPLES = [
     chip: "bg-chart-1/15 text-chart-1",
     panel: "border-chart-1/30 bg-chart-1/5",
     steps: [
-      { phase: "Clean, Integrate & Select", action: "Merge till receipts from every store; drop refunds and voided transactions." },
-      { phase: "Transform", action: "Convert each receipt into a basket: {milk, bread, eggs, ...}." },
-      { phase: "Data Mining", action: "Association rules find co-occurrences: milk → bread (confidence 78%)." },
-      { phase: "Evaluate Patterns", action: "Keep only rules that are frequent, strong, and surprising." },
-      { phase: "Present Knowledge", action: "Store managers get shelf-placement and bundle-pricing advice." }
+      { phase: "Data Cleaning", action: "Drop refunds and voided transactions from the receipts." },
+      { phase: "Data Integration", action: "Merge till data from every store into one warehouse." },
+      { phase: "Data Selection", action: "Keep just the fields needed: receipt ID and items." },
+      { phase: "Data Transformation", action: "Turn each receipt into a basket: {milk, bread, ...}." },
+      { phase: "Data Mining", action: "Association rules: milk → bread (confidence 78%)." },
+      { phase: "Pattern Evaluation", action: "Keep rules that are frequent, strong, surprising." },
+      { phase: "Knowledge Presentation", action: "Shelf-placement and bundle-pricing advice." }
     ]
   },
   {
@@ -53,11 +55,12 @@ const EXAMPLES = [
     chip: "bg-chart-4/15 text-chart-4",
     panel: "border-chart-4/30 bg-chart-4/5",
     steps: [
-      { phase: "Business Understanding", action: "Goal: keep listeners engaged — fewer skips, longer sessions." },
-      { phase: "Data Understanding", action: "Billions of plays, skips, likes, playlists — what signals taste?" },
-      { phase: "Data Preparation", action: "Build listener profiles and song features from raw event logs." },
+      { phase: "Business Understanding", action: "Goal: fewer skips, longer listening sessions." },
+      { phase: "Data Understanding", action: "Billions of plays, skips, likes — what signals taste?" },
+      { phase: "Data Preparation", action: "Build listener profiles and song features from logs." },
       { phase: "Modeling", action: "Collaborative filtering: 'listeners like you also loved...'" },
-      { phase: "Evaluate & Deploy", action: "A/B test against the old system, then serve it to millions daily." }
+      { phase: "Evaluation", action: "A/B test the recommender against the old system." },
+      { phase: "Deployment", action: "Serve the winning model to millions daily." }
     ]
   },
   {
@@ -72,11 +75,11 @@ const EXAMPLES = [
     chip: "bg-primary/15 text-primary",
     panel: "border-primary/30 bg-primary/5",
     steps: [
-      { phase: "Collect", action: "Export a year of orders, carts, and customer records." },
-      { phase: "Preprocess", action: "Fix currencies, remove test orders, merge duplicate accounts." },
-      { phase: "Analyze", action: "Compute KPIs — average order value, lifetime value, seasonal trends." },
-      { phase: "Interpret", action: "December spike is gifts; a loyal 12% drives half of revenue." },
-      { phase: "Tell the Story", action: "One dashboard, three recommendations, a decision by Friday." }
+      { phase: "Collecting Data", action: "Export a year of orders, carts, and customer records." },
+      { phase: "Preprocessing", action: "Fix currencies, remove test orders, merge duplicates." },
+      { phase: "Analyzing & Insights", action: "Compute KPIs — average order value, lifetime value, trends." },
+      { phase: "Interpretation", action: "December spike is gifts; a loyal 12% drives half of revenue." },
+      { phase: "Storytelling", action: "One dashboard, three recommendations, a decision by Friday." }
     ]
   }
 ];
@@ -144,32 +147,32 @@ export default function MethodologiesExamplesSlide({ data: _data }: { data: Hear
                 <span className="text-foreground/80">{active.reason}</span>
               </p>
               <p className="flex-none text-[11px] text-muted-foreground italic">
-                Condensed teaching view (5 steps)
+                All {active.steps.length} phases, as defined on the previous slide
               </p>
             </div>
-            <div className="grid grid-cols-5 gap-3">
+            <div
+              className="grid gap-2.5"
+              style={{ gridTemplateColumns: `repeat(${active.steps.length}, minmax(0, 1fr))` }}
+            >
               {active.steps.map((s, i) => (
                 <motion.div
                   key={s.phase}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.15 + i * 0.12 }}
-                  className="relative rounded-xl border border-border bg-card p-3 flex flex-col"
+                  transition={{ delay: 0.15 + i * 0.1 }}
+                  className="relative rounded-xl border border-border bg-card p-2.5 flex flex-col"
                 >
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <span className={`flex-none w-5 h-5 rounded-full text-[10px] font-bold text-white flex items-center justify-center ${active.bar}`}>
+                  <div className="flex items-start gap-1.5 mb-1.5">
+                    <span className={`flex-none mt-px w-5 h-5 rounded-full text-[10px] font-bold text-white flex items-center justify-center ${active.bar}`}>
                       {i + 1}
                     </span>
-                    {i < active.steps.length - 1 && (
-                      <span className="hidden" aria-hidden="true" />
-                    )}
                     <p className={`text-[11px] font-bold uppercase tracking-wide leading-tight ${active.accent}`}>
                       {s.phase}
                     </p>
                   </div>
-                  <p className="text-[13px] leading-snug text-foreground/85">{s.action}</p>
+                  <p className="text-xs leading-snug text-foreground/85">{s.action}</p>
                   {i < active.steps.length - 1 && (
-                    <span className={`absolute top-1/2 -right-2.5 w-2.5 h-px ${active.bar} opacity-60`} aria-hidden="true" />
+                    <span className={`absolute top-1/2 -right-2 w-2 h-px ${active.bar} opacity-60`} aria-hidden="true" />
                   )}
                 </motion.div>
               ))}
