@@ -22,7 +22,6 @@ import InstallRStudioSlide from "@/components/slides/InstallRStudioSlide";
 import RStudioEnvSlide from "@/components/slides/RStudioEnvSlide";
 import AlgorithmicThinkingSlide from "@/components/slides/AlgorithmicThinkingSlide";
 import CTHandsOnSlide from "@/components/slides/CTHandsOnSlide";
-import MethodologiesQuizSlide from "@/components/slides/MethodologiesQuizSlide";
 import VariableTypesSlide from "@/components/slides/VariableTypesSlide";
 import DataSourcesSlide from "@/components/slides/DataSourcesSlide";
 import EDAIntroSlide from "@/components/slides/EDAIntroSlide";
@@ -57,7 +56,6 @@ const SLIDES = [
   RStudioEnvSlide,
   AlgorithmicThinkingSlide,
   CTHandsOnSlide,
-  MethodologiesQuizSlide,
   VariableTypesSlide,
   DataSourcesSlide,
   EDAIntroSlide,
