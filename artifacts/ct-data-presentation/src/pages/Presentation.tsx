@@ -12,6 +12,7 @@ import CLOsSlide from "@/components/slides/CLOsSlide";
 import CourseToolboxSlide from "@/components/slides/CourseToolboxSlide";
 import DefinitionsSlide from "@/components/slides/DefinitionsSlide";
 import DataEcosystemSlide from "@/components/slides/DataEcosystemSlide";
+import GoalTwoSlide from "@/components/slides/GoalTwoSlide";
 import MethodologiesSlide from "@/components/slides/MethodologiesSlide";
 import MethodologiesExamplesSlide from "@/components/slides/MethodologiesExamplesSlide";
 import CTIntroSlide from "@/components/slides/CTIntroSlide";
@@ -44,6 +45,7 @@ const SLIDES = [
   CourseToolboxSlide,
   DefinitionsSlide,
   DataEcosystemSlide,
+  GoalTwoSlide,
   MethodologiesSlide,
   MethodologiesExamplesSlide,
   CTIntroSlide,
