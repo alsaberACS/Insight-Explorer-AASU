@@ -24,6 +24,12 @@ import AlgorithmicThinkingSlide from "@/components/slides/AlgorithmicThinkingSli
 import CTHandsOnSlide from "@/components/slides/CTHandsOnSlide";
 import GoalFourSlide from "@/components/slides/GoalFourSlide";
 import VariableTypesSlide from "@/components/slides/VariableTypesSlide";
+import DataCollectionSlide from "@/components/slides/DataCollectionSlide";
+import DataIntegrationSlide from "@/components/slides/DataIntegrationSlide";
+import DataHostingSlide from "@/components/slides/DataHostingSlide";
+import DataCleaningLabSlide from "@/components/slides/DataCleaningLabSlide";
+import DataWranglingSlide from "@/components/slides/DataWranglingSlide";
+import DataManagementSlide from "@/components/slides/DataManagementSlide";
 import DataSourcesSlide from "@/components/slides/DataSourcesSlide";
 import EDAIntroSlide from "@/components/slides/EDAIntroSlide";
 import LocationSlide from "@/components/slides/LocationSlide";
@@ -59,6 +65,12 @@ const SLIDES = [
   CTHandsOnSlide,
   GoalFourSlide,
   VariableTypesSlide,
+  DataCollectionSlide,
+  DataIntegrationSlide,
+  DataHostingSlide,
+  DataCleaningLabSlide,
+  DataWranglingSlide,
+  DataManagementSlide,
   DataSourcesSlide,
   EDAIntroSlide,
   LocationSlide,
