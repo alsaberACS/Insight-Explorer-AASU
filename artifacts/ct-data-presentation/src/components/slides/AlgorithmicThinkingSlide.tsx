@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Download } from "lucide-react";
 import { HeartData } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import RStudioPane from "@/components/RStudioPane";
@@ -71,13 +72,27 @@ export default function AlgorithmicThinkingSlide({ data: _data }: { data: HeartD
         >
           Pillar 4, Up Close
         </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-3xl md:text-4xl font-bold mb-2"
-        >
-          Algorithmic Thinking
-        </motion.h2>
+        <div className="flex items-start justify-between gap-4">
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-3xl md:text-4xl font-bold mb-2"
+          >
+            Algorithmic Thinking
+          </motion.h2>
+          <motion.a
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            href={`${import.meta.env.BASE_URL}heart.csv`}
+            download="heart.csv"
+            className="flex-none inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 text-primary px-4 py-2 text-sm font-semibold hover:bg-primary/20 transition-colors mt-1"
+            aria-label="Download the heart.csv dataset"
+          >
+            <Download className="w-4 h-4" />
+            heart.csv
+          </motion.a>
+        </div>
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
