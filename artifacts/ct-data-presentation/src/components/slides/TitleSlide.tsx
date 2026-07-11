@@ -30,6 +30,20 @@ export default function TitleSlide({ data }: SlideProps) {
             Thinking &<br/>
             <span className="text-primary">Data Analysis</span>
           </motion.h1>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="space-y-1 border-l-4 border-primary/60 pl-4"
+          >
+            <p className="text-lg md:text-xl font-semibold text-foreground">
+              Instructor: Ahmad R Alsaber <span className="text-muted-foreground font-normal">|</span> Ph.D. in Data Science
+            </p>
+            <p className="text-sm md:text-base text-muted-foreground">
+              Director &ndash; Institutional Research &amp; Effectiveness, American University of Kuwait (AUK)
+            </p>
+          </motion.div>
         </div>
 
         <motion.div
