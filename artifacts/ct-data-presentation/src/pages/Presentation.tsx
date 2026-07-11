@@ -17,6 +17,7 @@ import MethodologiesSlide from "@/components/slides/MethodologiesSlide";
 import MethodologiesExamplesSlide from "@/components/slides/MethodologiesExamplesSlide";
 import CTIntroSlide from "@/components/slides/CTIntroSlide";
 import CTMethodologySlide from "@/components/slides/CTMethodologySlide";
+import GoalThreeSlide from "@/components/slides/GoalThreeSlide";
 import RStudioEnvSlide from "@/components/slides/RStudioEnvSlide";
 import AlgorithmicThinkingSlide from "@/components/slides/AlgorithmicThinkingSlide";
 import CTHandsOnSlide from "@/components/slides/CTHandsOnSlide";
@@ -50,6 +51,7 @@ const SLIDES = [
   MethodologiesExamplesSlide,
   CTIntroSlide,
   CTMethodologySlide,
+  GoalThreeSlide,
   RStudioEnvSlide,
   AlgorithmicThinkingSlide,
   CTHandsOnSlide,
