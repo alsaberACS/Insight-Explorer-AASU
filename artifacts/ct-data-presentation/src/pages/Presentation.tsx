@@ -8,6 +8,7 @@ import { useHeartData } from "@/hooks/use-heart-data";
 import TitleSlide from "@/components/slides/TitleSlide";
 import WorkshopPurposeSlide from "@/components/slides/WorkshopPurposeSlide";
 import CLOsSlide from "@/components/slides/CLOsSlide";
+import CourseToolboxSlide from "@/components/slides/CourseToolboxSlide";
 import DefinitionsSlide from "@/components/slides/DefinitionsSlide";
 import DataEcosystemSlide from "@/components/slides/DataEcosystemSlide";
 import MethodologiesSlide from "@/components/slides/MethodologiesSlide";
@@ -33,6 +34,7 @@ const SLIDES = [
   TitleSlide,
   WorkshopPurposeSlide,
   CLOsSlide,
+  CourseToolboxSlide,
   DefinitionsSlide,
   DataEcosystemSlide,
   MethodologiesSlide,
