@@ -80,18 +80,32 @@ export default function AlgorithmicThinkingSlide({ data: _data }: { data: HeartD
           >
             Algorithmic Thinking
           </motion.h2>
-          <motion.a
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            href={`${import.meta.env.BASE_URL}heart.csv`}
-            download="heart.csv"
-            className="flex-none inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 text-primary px-4 py-2 text-sm font-semibold hover:bg-primary/20 transition-colors mt-1"
-            aria-label="Download the heart.csv dataset"
-          >
-            <Download className="w-4 h-4" />
-            heart.csv
-          </motion.a>
+          <div className="flex-none flex items-center gap-2 mt-1">
+            <motion.a
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              href={`${import.meta.env.BASE_URL}heart.csv`}
+              download="heart.csv"
+              className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 text-primary px-4 py-2 text-sm font-semibold hover:bg-primary/20 transition-colors"
+              aria-label="Download the heart.csv dataset"
+            >
+              <Download className="w-4 h-4" />
+              heart.csv
+            </motion.a>
+            <motion.a
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              href={`${import.meta.env.BASE_URL}heart-codebook.csv`}
+              download="heart-codebook.csv"
+              className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 text-primary px-4 py-2 text-sm font-semibold hover:bg-primary/20 transition-colors"
+              aria-label="Download the variable codes and definitions"
+            >
+              <Download className="w-4 h-4" />
+              Variable codebook
+            </motion.a>
+          </div>
         </div>
         <motion.p
           initial={{ opacity: 0 }}

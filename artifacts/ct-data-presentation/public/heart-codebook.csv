@@ -1,0 +1,15 @@
+variable,meaning,codes_units
+age,Age in years,29 - 77 (continuous)
+sex,Biological sex,"0 = Female, 1 = Male"
+cp,Chest pain type,"0 = Typical angina, 1 = Atypical angina, 2 = Non-anginal pain, 3 = Asymptomatic"
+trestbps,Resting blood pressure,mm Hg (continuous)
+chol,Serum cholesterol,mg/dl (continuous)
+fbs,Fasting blood sugar > 120 mg/dl,"0 = No, 1 = Yes"
+restecg,Resting ECG result,"0 = Normal, 1 = ST-T wave abnormality, 2 = LV hypertrophy"
+thalach,Maximum heart rate achieved,bpm (continuous)
+exang,Exercise-induced angina,"0 = No, 1 = Yes"
+oldpeak,ST depression induced by exercise,0.0 - 6.2 (continuous)
+slope,Slope of peak exercise ST segment,"0 = Upsloping, 1 = Flat, 2 = Downsloping"
+ca,Number of major vessels coloured by fluoroscopy,"0 - 3 (4 = invalid code, remove before analysis)"
+thal,Thalassemia test result,"1 = Normal, 2 = Fixed defect, 3 = Reversible defect (0 = invalid code, remove before analysis)"
+target,Heart disease diagnosis,"0 = No disease, 1 = Disease"
