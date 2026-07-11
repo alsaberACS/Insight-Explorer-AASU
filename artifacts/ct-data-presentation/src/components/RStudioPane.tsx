@@ -58,6 +58,7 @@ export default function RStudioPane({
 }) {
   const [code, setCode] = useState(initialCode);
   const [output, setOutput] = useState<ROutputLine[] | null>(null);
+  const [plots, setPlots] = useState<string[]>([]);
   const [running, setRunning] = useState(false);
   const [booting, setBooting] = useState(false);
   const consoleRef = useRef<HTMLDivElement>(null);
@@ -76,6 +77,7 @@ export default function RStudioPane({
   useEffect(() => {
     setCode(initialCode);
     setOutput(null);
+    setPlots([]);
   }, [initialCode]);
 
   useEffect(() => {
@@ -116,8 +118,11 @@ export default function RStudioPane({
           if (mountedRef.current) setBooting(false);
         }
       }
-      const lines = await runR(code);
-      if (mountedRef.current) setOutput(lines);
+      const result = await runR(code);
+      if (mountedRef.current) {
+        setOutput(result.lines);
+        setPlots(result.plots);
+      }
     } finally {
       runLockRef.current = false;
       if (mountedRef.current) setRunning(false);
@@ -219,24 +224,34 @@ export default function RStudioPane({
             )}
             {!running &&
               output !== null &&
-              (output.length === 0 ? (
+              (output.length === 0 && plots.length === 0 ? (
                 <div className="text-[#8a9bac]">
                   (script ran with no printed output)
                 </div>
               ) : (
-                output.map((line, i) => (
-                  <pre
-                    key={i}
-                    className={
-                      "m-0 whitespace-pre-wrap " +
-                      (line.type === "stderr"
-                        ? "text-[#c0392b]"
-                        : "text-[#1a3a5c]")
-                    }
-                  >
-                    {line.text}
-                  </pre>
-                ))
+                <>
+                  {output.map((line, i) => (
+                    <pre
+                      key={i}
+                      className={
+                        "m-0 whitespace-pre-wrap " +
+                        (line.type === "stderr"
+                          ? "text-[#c0392b]"
+                          : "text-[#1a3a5c]")
+                      }
+                    >
+                      {line.text}
+                    </pre>
+                  ))}
+                  {plots.map((src, i) => (
+                    <img
+                      key={i}
+                      src={src}
+                      alt={`R plot ${i + 1}`}
+                      className="mt-2 w-full max-w-full rounded border border-[#c9d3dd] bg-white"
+                    />
+                  ))}
+                </>
               ))}
           </div>
         </div>

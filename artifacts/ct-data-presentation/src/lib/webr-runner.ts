@@ -1,6 +1,7 @@
 import { WebR } from "webr";
 
 export type ROutputLine = { type: "stdout" | "stderr"; text: string };
+export type RRunResult = { lines: ROutputLine[]; plots: string[] };
 
 let webRInstance: WebR | null = null;
 let initPromise: Promise<WebR> | null = null;
@@ -38,13 +39,27 @@ export function isWebRReady(): boolean {
 
 let runQueue: Promise<unknown> = Promise.resolve();
 
-export function runR(code: string): Promise<ROutputLine[]> {
+export function runR(code: string): Promise<RRunResult> {
   const next = runQueue.then(() => runRInternal(code));
   runQueue = next.catch(() => undefined);
   return next;
 }
 
-async function runRInternal(code: string): Promise<ROutputLine[]> {
+function bitmapToDataUrl(img: ImageBitmap): string | null {
+  try {
+    const canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+    ctx.drawImage(img, 0, 0);
+    return canvas.toDataURL("image/png");
+  } catch {
+    return null;
+  }
+}
+
+async function runRInternal(code: string): Promise<RRunResult> {
   const webR = await getWebR();
   const shelter = await new webR.Shelter();
   try {
@@ -52,6 +67,7 @@ async function runRInternal(code: string): Promise<ROutputLine[]> {
       withAutoprint: true,
       captureStreams: true,
       captureConditions: true,
+      captureGraphics: { width: 720, height: 460, bg: "white", pointsize: 14 },
     });
     const lines: ROutputLine[] = [];
     for (const out of result.output) {
@@ -69,14 +85,23 @@ async function runRInternal(code: string): Promise<ROutputLine[]> {
         lines.push({ type: "stderr", text: "Error: " + msg });
       }
     }
-    return lines;
+    const plots: string[] = [];
+    for (const img of result.images ?? []) {
+      const url = bitmapToDataUrl(img);
+      if (url) plots.push(url);
+      if (typeof img.close === "function") img.close();
+    }
+    return { lines, plots };
   } catch (err) {
-    return [
-      {
-        type: "stderr",
-        text: "Error: " + (err instanceof Error ? err.message : String(err)),
-      },
-    ];
+    return {
+      lines: [
+        {
+          type: "stderr",
+          text: "Error: " + (err instanceof Error ? err.message : String(err)),
+        },
+      ],
+      plots: [],
+    };
   } finally {
     await shelter.purge();
   }
