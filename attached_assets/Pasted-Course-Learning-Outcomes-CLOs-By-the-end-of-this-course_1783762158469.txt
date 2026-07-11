@@ -1,0 +1,25 @@
+Course Learning Outcomes (CLOs)
+By the end of this course, students should be able to:
+Explain the role of data and evidence in decision-making across society, organizations, and professional disciplines.
+Describe the data analytics lifecycle, from problem identification and data collection to analysis, interpretation, and communication.
+Identify and classify different types, sources, and formats of data (structured, semi-structured, and unstructured).
+Assess the quality, credibility, reliability, and validity of data from different sources.
+Formulate analytical questions and identify the variables required to answer real-world problems.
+Collect, import, clean, transform, and prepare datasets for analysis using modern analytical tools.
+Apply exploratory data analysis (EDA) techniques to summarize and understand datasets.
+Create effective charts, dashboards, and data visualizations that communicate insights clearly and accurately.
+Demonstrate an understanding of fundamental statistical concepts, including distributions, sampling, variability, probability, and uncertainty.
+Explain the principles of descriptive and inferential statistics and their role in evidence-based decision-making.
+Understand the concept of statistical hypothesis testing, including null and alternative hypotheses, significance levels, p-values, confidence intervals, effect sizes, and statistical power.
+Select appropriate statistical methods for different types of research questions and data.
+Interpret the results of common statistical analyses correctly and communicate their practical implications.
+Understand the concepts of correlation, causation, prediction, and inference, and distinguish among them appropriately.
+Explain the principles of predictive and explanatory modeling, including regression, classification, clustering, and introductory machine learning techniques.
+Evaluate the performance and limitations of analytical models using appropriate evaluation metrics.
+Analyze data using artificial intelligence tools and modern analytical software to improve efficiency and productivity.
+Critically evaluate AI-generated analyses, recognizing potential errors, biases, hallucinations, and limitations.
+Recognize misleading graphs, misinformation, statistical fallacies, and common sources of bias in data interpretation.
+Apply ethical principles, privacy considerations, and responsible AI practices throughout the data analysis process.
+Communicate analytical findings effectively through written reports, presentations, dashboards, and data storytelling tailored to both technical and non-technical audiences.
+Collaborate effectively in multidisciplinary teams to solve real-world problems using data.
+Complete an end-to-end data analytics project by collecting, analyzing, interpreting, and presenting evidence-based recommendations relevant to the student's field of study.

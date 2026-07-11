@@ -6,6 +6,8 @@ import { Progress } from "@/components/ui/progress";
 import { useHeartData } from "@/hooks/use-heart-data";
 
 import TitleSlide from "@/components/slides/TitleSlide";
+import WorkshopPurposeSlide from "@/components/slides/WorkshopPurposeSlide";
+import CLOsSlide from "@/components/slides/CLOsSlide";
 import DefinitionsSlide from "@/components/slides/DefinitionsSlide";
 import DataEcosystemSlide from "@/components/slides/DataEcosystemSlide";
 import MethodologiesSlide from "@/components/slides/MethodologiesSlide";
@@ -29,6 +31,8 @@ import ClosingSlide from "@/components/slides/ClosingSlide";
 
 const SLIDES = [
   TitleSlide,
+  WorkshopPurposeSlide,
+  CLOsSlide,
   DefinitionsSlide,
   DataEcosystemSlide,
   MethodologiesSlide,
@@ -58,14 +62,19 @@ export default function Presentation() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null;
-      if (
-        target &&
-        (target.closest("button, a, input, textarea, select, [contenteditable], [role='button']") ||
-          target.isContentEditable)
-      ) {
+      const inTextField =
+        !!target &&
+        (target.closest("input, textarea, select, [contenteditable]") || target.isContentEditable);
+      const inInteractive =
+        !!target && !!target.closest("button, a, [role='button']");
+      if (inTextField) {
         return;
       }
-      if (e.key === "ArrowRight" || e.key === " ") {
+      const isArrow = e.key === "ArrowRight" || e.key === "ArrowLeft";
+      if (inInteractive && !isArrow) {
+        return;
+      }
+      if (e.key === "ArrowRight" || (e.key === " " && !inInteractive)) {
         setCurrentIndex((prev) => Math.min(prev + 1, SLIDES.length - 1));
       } else if (e.key === "ArrowLeft") {
         setCurrentIndex((prev) => Math.max(prev - 1, 0));
