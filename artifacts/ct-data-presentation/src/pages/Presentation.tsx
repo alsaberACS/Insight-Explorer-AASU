@@ -101,10 +101,30 @@ const SECTIONS: SlideSection[] = [
   { label: "Wrap-Up", start: 38, count: 1 },
 ];
 
+const STAGE_W = 1280;
+const STAGE_H = 720;
+const FOOTER_H = 64;
+
+function useStageScale() {
+  const [size, setSize] = useState({ w: window.innerWidth, h: window.innerHeight });
+  useEffect(() => {
+    const onResize = () => setSize({ w: window.innerWidth, h: window.innerHeight });
+    window.addEventListener("resize", onResize);
+    window.addEventListener("orientationchange", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("orientationchange", onResize);
+    };
+  }, []);
+  return Math.min(size.w / STAGE_W, (size.h - FOOTER_H) / STAGE_H);
+}
+
 export default function Presentation() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [navOpen, setNavOpen] = useState(false);
   const { data, loading, error } = useHeartData();
+  const scale = useStageScale();
+  const useStage = scale < 0.98;
 
   useEffect(() => {
     if (navOpen) return;
@@ -130,6 +150,45 @@ export default function Presentation() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [navOpen]);
+
+  useEffect(() => {
+    if (navOpen) return;
+    let startX = 0;
+    let startY = 0;
+    let startTime = 0;
+    let fromTextField = false;
+
+    const onTouchStart = (e: TouchEvent) => {
+      const t = e.touches[0];
+      startX = t.clientX;
+      startY = t.clientY;
+      startTime = Date.now();
+      const target = e.target as HTMLElement | null;
+      fromTextField = !!target && !!target.closest("input, textarea, select, [contenteditable]");
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      if (fromTextField) return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+      const elapsed = Date.now() - startTime;
+      if (elapsed < 800 && Math.abs(dx) > 55 && Math.abs(dx) > 1.5 * Math.abs(dy)) {
+        if (dx < 0) {
+          setCurrentIndex((prev) => Math.min(prev + 1, SLIDES.length - 1));
+        } else {
+          setCurrentIndex((prev) => Math.max(prev - 1, 0));
+        }
+      }
+    };
+
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    return () => {
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchend", onTouchEnd);
+    };
   }, [navOpen]);
 
   if (loading) {
@@ -161,9 +220,27 @@ export default function Presentation() {
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: -20, scale: 0.98 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0 flex items-center justify-center p-8 md:p-16"
+            className={
+              useStage
+                ? "absolute inset-0 flex items-center justify-center overflow-hidden"
+                : "absolute inset-0 flex items-center justify-center p-8 md:p-16"
+            }
           >
-            {data && <CurrentSlide data={data} />}
+            {useStage ? (
+              <div
+                className="flex-none flex items-center justify-center p-16"
+                style={{
+                  width: STAGE_W,
+                  height: STAGE_H,
+                  transform: `scale(${scale})`,
+                  transformOrigin: "center center",
+                }}
+              >
+                {data && <CurrentSlide data={data} />}
+              </div>
+            ) : (
+              data && <CurrentSlide data={data} />
+            )}
           </motion.div>
         </AnimatePresence>
       </main>

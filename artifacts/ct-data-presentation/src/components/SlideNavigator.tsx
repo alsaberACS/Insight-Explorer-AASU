@@ -76,7 +76,7 @@ export default function SlideNavigator({
           </button>
         </div>
 
-        <div className="columns-2 gap-x-8 [column-fill:balance]">
+        <div className="columns-1 sm:columns-2 gap-x-8 [column-fill:balance]">
           {sections.map((section) => (
             <div key={section.label} className="break-inside-avoid mb-4">
               <p className="text-[11px] uppercase tracking-[0.18em] text-primary font-semibold mb-1.5">
