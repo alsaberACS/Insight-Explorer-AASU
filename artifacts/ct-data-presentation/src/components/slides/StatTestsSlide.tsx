@@ -1,7 +1,19 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FlaskConical, Copy, Check, Target } from "lucide-react";
+import { FlaskConical, Copy, Check, Target, Map, Wrench } from "lucide-react";
 import { HeartData } from "@/lib/data";
+
+const TEST_MAP = [
+  { objective: "Compare one mean", parametric: "One-sample t-test", nonParametric: "Sign Test, Wilcoxon Signed-Rank" },
+  { objective: "Compare two independent groups", parametric: "Independent t-test, Welch's t-test", nonParametric: "Mann-Whitney U" },
+  { objective: "Compare paired groups", parametric: "Paired t-test", nonParametric: "Wilcoxon Signed-Rank" },
+  { objective: "Compare \u22653 independent groups", parametric: "One-way ANOVA", nonParametric: "Kruskal-Wallis" },
+  { objective: "Compare \u22653 repeated measures", parametric: "Repeated Measures ANOVA", nonParametric: "Friedman Test" },
+  { objective: "Correlation", parametric: "Pearson", nonParametric: "Spearman, Kendall" },
+  { objective: "Regression", parametric: "Linear Regression", nonParametric: "Rank-based, Robust Regression" },
+  { objective: "Categorical association", parametric: "Chi-square", nonParametric: "Fisher's Exact Test" },
+  { objective: "Survival", parametric: "Cox Regression", nonParametric: "Log-rank Test" },
+];
 
 const TESTS = [
   {
@@ -62,6 +74,7 @@ const TESTS = [
 ];
 
 export default function StatTestsSlide({ data: _data }: { data: HeartData[] }) {
+  const [view, setView] = useState<"map" | "explore">("map");
   const [active, setActive] = useState(0);
   const [copied, setCopied] = useState(false);
   const test = TESTS[active];
@@ -98,17 +111,103 @@ export default function StatTestsSlide({ data: _data }: { data: HeartData[] }) {
         >
           The Statistical Test Toolbox
         </motion.h2>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.15 }}
-          className="text-base text-muted-foreground"
-        >
-          Nine tools, one rule: the question and the variable types pick the test — never the
-          other way round.
-        </motion.p>
+        <div className="flex items-end justify-between gap-4">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.15 }}
+            className="text-base text-muted-foreground"
+          >
+            One rule: the objective and the data's behavior pick the test — never the other way
+            round.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="flex-none flex items-center gap-1 rounded-full border border-border bg-card p-1"
+          >
+            <button
+              onClick={() => setView("map")}
+              className={
+                "inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors " +
+                (view === "map"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-foreground")
+              }
+            >
+              <Map className="w-3.5 h-3.5" />
+              Choosing the test
+            </button>
+            <button
+              onClick={() => setView("explore")}
+              className={
+                "inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors " +
+                (view === "explore"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-foreground")
+              }
+            >
+              <Wrench className="w-3.5 h-3.5" />
+              Explore with R code
+            </button>
+          </motion.div>
+        </div>
       </div>
 
+      {view === "map" && (
+        <motion.div
+          key="map"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex-1 min-h-0 max-h-[475px] rounded-2xl border border-border bg-card shadow-sm overflow-hidden flex flex-col"
+        >
+          <div className="grid grid-cols-[240px_1fr_1fr] text-[13px] font-bold border-b border-border bg-primary/10">
+            <p className="px-4 py-2.5 uppercase tracking-[0.14em] text-[11px] text-muted-foreground">
+              Objective
+            </p>
+            <p className="px-4 py-2.5 uppercase tracking-[0.14em] text-[11px] text-primary">
+              Parametric{" "}
+              <span className="normal-case tracking-normal font-medium text-muted-foreground">
+                — normal-ish data
+              </span>
+            </p>
+            <p className="px-4 py-2.5 uppercase tracking-[0.14em] text-[11px] text-primary">
+              Non-parametric{" "}
+              <span className="normal-case tracking-normal font-medium text-muted-foreground">
+                — skewed, ordinal, small n
+              </span>
+            </p>
+          </div>
+          <div className="flex-1 flex flex-col">
+            {TEST_MAP.map((row, i) => (
+              <motion.div
+                key={row.objective}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 + i * 0.05 }}
+                className={
+                  "grid grid-cols-[240px_1fr_1fr] flex-1 items-center text-[13.5px] " +
+                  (i % 2 === 0 ? "bg-transparent" : "bg-muted/40") +
+                  (i < TEST_MAP.length - 1 ? " border-b border-border/50" : "")
+                }
+              >
+                <p className="px-4 font-semibold leading-tight">{row.objective}</p>
+                <p className="px-4 text-foreground/85 leading-tight">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary mr-2 align-middle" />
+                  {row.parametric}
+                </p>
+                <p className="px-4 text-foreground/85 leading-tight">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full border border-primary mr-2 align-middle" />
+                  {row.nonParametric}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      )}
+
+      {view === "explore" && (
       <div className="flex gap-6 flex-1 min-h-0 max-h-[475px]">
         <div className="w-[380px] flex-none grid grid-cols-2 gap-2.5 content-center">
           {TESTS.map((t, i) => (
@@ -217,6 +316,7 @@ export default function StatTestsSlide({ data: _data }: { data: HeartData[] }) {
           </AnimatePresence>
         </div>
       </div>
+      )}
     </div>
   );
 }
