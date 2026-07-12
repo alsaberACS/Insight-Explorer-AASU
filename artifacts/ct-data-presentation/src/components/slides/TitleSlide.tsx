@@ -8,11 +8,11 @@ import boubyanLogo from "@assets/BoubyanBankLogo_(1).svg_1783852445171.png";
 import aasuLogo from "@assets/logorightcolor_1783852445171.png";
 
 const PARTNERS = [
-  { src: aasuLogo, alt: "Abdullah Al Salem University", tier: "lg" },
+  { src: aasuLogo, alt: "Abdullah Al Salem University", tier: "md" },
   { src: boubyanLogo, alt: "Boubyan Bank", tier: "md" },
-  { src: cceLogo, alt: "Continuing & Community Education, AUK", tier: "sm" },
-  { src: aukLogo, alt: "American University of Kuwait", tier: "sm" },
-  { src: kfasLogo, alt: "Kuwait Foundation for the Advancement of Sciences", tier: "sm" },
+  { src: cceLogo, alt: "Continuing & Community Education, AUK", tier: "md" },
+  { src: aukLogo, alt: "American University of Kuwait", tier: "md" },
+  { src: kfasLogo, alt: "Kuwait Foundation for the Advancement of Sciences", tier: "md" },
 ] as const;
 
 const TIER_TILE: Record<"sm" | "md" | "lg", string> = {
