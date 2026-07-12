@@ -8,6 +8,7 @@ import SlideNavigator, { SlideSection } from "@/components/SlideNavigator";
 
 import TitleSlide from "@/components/slides/TitleSlide";
 import InstructorSlide from "@/components/slides/InstructorSlide";
+import ThankYouSlide from "@/components/slides/ThankYouSlide";
 import GoalOneSlide from "@/components/slides/GoalOneSlide";
 import WorkshopPurposeSlide from "@/components/slides/WorkshopPurposeSlide";
 import CLOsSlide from "@/components/slides/CLOsSlide";
@@ -102,6 +103,7 @@ const SLIDE_DEFS: { component: (props: { data: import("@/lib/data").HeartData[] 
   { component: RAssociateSlide, title: "Q3 in R: Association" },
   { component: REffectSlide, title: "Q4 in R: Measure Effects" },
   { component: RPredictSlide, title: "Q5 in R: Predict & Validate" },
+  { component: ThankYouSlide, title: "Thank You & Evaluation" },
 ];
 
 const SLIDES = SLIDE_DEFS.map((s) => s.component);
@@ -115,6 +117,7 @@ const SECTIONS: SlideSection[] = [
   { label: "Goal 4 · Dealing with Data", start: 18, count: 8 },
   { label: "Goal 5 · EDA & Visualization", start: 26, count: 8 },
   { label: "Goal 6 · Hands-On with RStudio", start: 34, count: 12 },
+  { label: "Wrap-Up", start: 46, count: 1 },
 ];
 
 const STAGE_W = 1280;
