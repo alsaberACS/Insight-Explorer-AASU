@@ -43,6 +43,7 @@ import GoalSixSlide from "@/components/slides/GoalSixSlide";
 import ProjectSetupSlide from "@/components/slides/ProjectSetupSlide";
 import ReadDataSlide from "@/components/slides/ReadDataSlide";
 import RLibrarySlide from "@/components/slides/RLibrarySlide";
+import RLibraryDiscoverSlide from "@/components/slides/RLibraryDiscoverSlide";
 import RStudioHandsOnSlide from "@/components/slides/RStudioHandsOnSlide";
 import ClosingSlide from "@/components/slides/ClosingSlide";
 
@@ -84,6 +85,7 @@ const SLIDE_DEFS: { component: (props: { data: import("@/lib/data").HeartData[] 
   { component: ProjectSetupSlide, title: "Set Up Your Project" },
   { component: ReadDataSlide, title: "Open the Data in RStudio" },
   { component: RLibrarySlide, title: "Dealing with R Libraries" },
+  { component: RLibraryDiscoverSlide, title: "Finding the Right Library" },
   { component: RStudioHandsOnSlide, title: "RStudio Lab: Heart Disease" },
   { component: ClosingSlide, title: "Closing" },
 ];
@@ -98,8 +100,8 @@ const SECTIONS: SlideSection[] = [
   { label: "Goal 3 · Computational Thinking & R", start: 12, count: 5 },
   { label: "Goal 4 · Dealing with Data", start: 17, count: 8 },
   { label: "Goal 5 · EDA & Visualization", start: 25, count: 8 },
-  { label: "Goal 6 · Hands-On with RStudio", start: 33, count: 5 },
-  { label: "Wrap-Up", start: 38, count: 1 },
+  { label: "Goal 6 · Hands-On with RStudio", start: 33, count: 6 },
+  { label: "Wrap-Up", start: 39, count: 1 },
 ];
 
 const STAGE_W = 1280;
