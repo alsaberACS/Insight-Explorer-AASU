@@ -11,12 +11,24 @@ import boubyanLogo from "@assets/BoubyanBankLogo_(1).svg_1783852445171.png";
 import aasuLogo from "@assets/logorightcolor_1783852445171.png";
 
 const PARTNERS = [
-  { src: cceLogo, alt: "Continuing & Community Education, AUK" },
-  { src: aukLogo, alt: "American University of Kuwait" },
-  { src: kfasLogo, alt: "Kuwait Foundation for the Advancement of Sciences" },
-  { src: boubyanLogo, alt: "Boubyan Bank" },
-  { src: aasuLogo, alt: "Abdullah Al Salem University" },
-];
+  { src: cceLogo, alt: "Continuing & Community Education, AUK", tier: "sm" },
+  { src: aukLogo, alt: "American University of Kuwait", tier: "sm" },
+  { src: kfasLogo, alt: "Kuwait Foundation for the Advancement of Sciences", tier: "sm" },
+  { src: boubyanLogo, alt: "Boubyan Bank", tier: "md" },
+  { src: aasuLogo, alt: "Abdullah Al Salem University", tier: "lg" },
+] as const;
+
+const TIER_TILE: Record<"sm" | "md" | "lg", string> = {
+  sm: "h-8 px-2 py-1",
+  md: "h-10 px-2.5 py-1",
+  lg: "h-12 px-3 py-1.5",
+};
+
+const TIER_IMG: Record<"sm" | "md" | "lg", string> = {
+  sm: "max-w-[72px]",
+  md: "max-w-[92px]",
+  lg: "max-w-[116px]",
+};
 
 const STATS = [
   { value: "15+", label: "Years of Experience" },
@@ -229,9 +241,9 @@ export default function InstructorSlide({ data: _data }: { data: HeartData[] }) 
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.9 + i * 0.06 }}
-                className="h-9 rounded-lg border border-border/60 bg-white shadow-sm px-2.5 py-1 flex items-center"
+                className={`rounded-lg border border-border/60 bg-white shadow-sm flex items-center ${TIER_TILE[p.tier]}`}
               >
-                <img src={p.src} alt={p.alt} className="h-full w-auto max-w-[84px] object-contain" />
+                <img src={p.src} alt={p.alt} className={`h-full w-auto object-contain ${TIER_IMG[p.tier]}`} />
               </motion.div>
             ))}
           </div>

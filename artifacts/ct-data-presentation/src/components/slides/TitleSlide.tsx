@@ -8,12 +8,24 @@ import boubyanLogo from "@assets/BoubyanBankLogo_(1).svg_1783852445171.png";
 import aasuLogo from "@assets/logorightcolor_1783852445171.png";
 
 const PARTNERS = [
-  { src: cceLogo, alt: "Continuing & Community Education, AUK" },
-  { src: aukLogo, alt: "American University of Kuwait" },
-  { src: kfasLogo, alt: "Kuwait Foundation for the Advancement of Sciences" },
-  { src: boubyanLogo, alt: "Boubyan Bank" },
-  { src: aasuLogo, alt: "Abdullah Al Salem University" },
-];
+  { src: cceLogo, alt: "Continuing & Community Education, AUK", tier: "sm" },
+  { src: aukLogo, alt: "American University of Kuwait", tier: "sm" },
+  { src: kfasLogo, alt: "Kuwait Foundation for the Advancement of Sciences", tier: "sm" },
+  { src: boubyanLogo, alt: "Boubyan Bank", tier: "md" },
+  { src: aasuLogo, alt: "Abdullah Al Salem University", tier: "lg" },
+] as const;
+
+const TIER_TILE: Record<"sm" | "md" | "lg", string> = {
+  sm: "h-12 px-3.5 py-1.5",
+  md: "h-16 px-4 py-2",
+  lg: "h-20 px-5 py-2.5",
+};
+
+const TIER_IMG: Record<"sm" | "md" | "lg", string> = {
+  sm: "max-w-[110px]",
+  md: "max-w-[150px]",
+  lg: "max-w-[190px]",
+};
 
 interface SlideProps {
   data: HeartData[];
@@ -134,9 +146,9 @@ export default function TitleSlide({ data }: SlideProps) {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.85 + i * 0.08 }}
-              className="h-14 rounded-xl border border-border/60 bg-white shadow-sm px-4 py-2 flex items-center"
+              className={`rounded-xl border border-border/60 bg-white shadow-sm flex items-center ${TIER_TILE[p.tier]}`}
             >
-              <img src={p.src} alt={p.alt} className="h-full w-auto max-w-[130px] object-contain" />
+              <img src={p.src} alt={p.alt} className={`h-full w-auto object-contain ${TIER_IMG[p.tier]}`} />
             </motion.div>
           ))}
         </div>

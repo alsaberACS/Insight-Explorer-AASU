@@ -11,12 +11,24 @@ import boubyanLogo from "@assets/BoubyanBankLogo_(1).svg_1783852445171.png";
 import aasuLogo from "@assets/logorightcolor_1783852445171.png";
 
 const PARTNERS = [
-  { src: cceLogo, alt: "Continuing & Community Education, AUK" },
-  { src: aukLogo, alt: "American University of Kuwait" },
-  { src: kfasLogo, alt: "Kuwait Foundation for the Advancement of Sciences" },
-  { src: boubyanLogo, alt: "Boubyan Bank" },
-  { src: aasuLogo, alt: "Abdullah Al Salem University" },
-];
+  { src: cceLogo, alt: "Continuing & Community Education, AUK", tier: "sm" },
+  { src: aukLogo, alt: "American University of Kuwait", tier: "sm" },
+  { src: kfasLogo, alt: "Kuwait Foundation for the Advancement of Sciences", tier: "sm" },
+  { src: boubyanLogo, alt: "Boubyan Bank", tier: "md" },
+  { src: aasuLogo, alt: "Abdullah Al Salem University", tier: "lg" },
+] as const;
+
+const TIER_TILE: Record<"sm" | "md" | "lg", string> = {
+  sm: "h-10 px-2.5 py-1",
+  md: "h-12 px-3 py-1.5",
+  lg: "h-16 px-4 py-2",
+};
+
+const TIER_IMG: Record<"sm" | "md" | "lg", string> = {
+  sm: "max-w-[86px]",
+  md: "max-w-[110px]",
+  lg: "max-w-[150px]",
+};
 
 export default function ThankYouSlide({ data: _data }: { data: HeartData[] }) {
   const [qrOpen, setQrOpen] = useState(false);
@@ -104,9 +116,9 @@ export default function ThankYouSlide({ data: _data }: { data: HeartData[] }) {
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 + i * 0.07 }}
-                className="h-11 rounded-lg border border-border/60 bg-white shadow-sm px-3 py-1.5 flex items-center"
+                className={`rounded-lg border border-border/60 bg-white shadow-sm flex items-center ${TIER_TILE[p.tier]}`}
               >
-                <img src={p.src} alt={p.alt} className="h-full w-auto max-w-[96px] object-contain" />
+                <img src={p.src} alt={p.alt} className={`h-full w-auto object-contain ${TIER_IMG[p.tier]}`} />
               </motion.div>
             ))}
           </div>
