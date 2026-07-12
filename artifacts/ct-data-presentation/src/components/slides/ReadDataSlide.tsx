@@ -1,9 +1,29 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { FileInput, Eye } from "lucide-react";
+import { FileInput, Eye, Copy, Check } from "lucide-react";
 import { HeartData } from "@/lib/data";
 import rstudioImg from "@assets/Screenshot_2026-07-12_at_10.55.00_AM_1783842984248.png";
 
+const R_CODE = 'heart <- read.csv("heart.csv")\nhead(heart)';
+
 export default function ReadDataSlide({ data: _data }: { data: HeartData[] }) {
+  const [copied, setCopied] = useState(false);
+
+  const copyCode = async () => {
+    try {
+      await navigator.clipboard.writeText(R_CODE);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = R_CODE;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="w-full max-w-6xl mx-auto h-full flex flex-col justify-center">
       <div className="mb-4">
@@ -44,6 +64,18 @@ export default function ReadDataSlide({ data: _data }: { data: HeartData[] }) {
               <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
               <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
               <span className="ml-2 text-xs text-white/50 font-mono">Console</span>
+              <button
+                onClick={copyCode}
+                className={
+                  "ml-auto inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-semibold transition-colors " +
+                  (copied
+                    ? "bg-teal-500/20 text-teal-300"
+                    : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white")
+                }
+              >
+                {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? "Copied" : "Copy"}
+              </button>
             </div>
             <pre className="px-5 py-4 text-[15px] font-mono leading-relaxed text-white/90">
               <code>
