@@ -4,6 +4,19 @@ import { GraduationCap, BookOpen, Quote, FileText, QrCode, ZoomIn, X } from "luc
 import { HeartData } from "@/lib/data";
 import instructorPhoto from "@assets/AhmadPic_1783851304239.png";
 import cvQrCode from "@assets/Alsaber_CV_1783851372621.png";
+import aukLogo from "@assets/auk-logo_1783852445171.jpeg";
+import cceLogo from "@assets/CCE-AUK_New_Logo_2025_1783852445171.jpeg";
+import kfasLogo from "@assets/KFAS_Logo_new_1754250510135_1783852445171.png";
+import boubyanLogo from "@assets/BoubyanBankLogo_(1).svg_1783852445171.png";
+import aasuLogo from "@assets/logorightcolor_1783852445171.png";
+
+const PARTNERS = [
+  { src: cceLogo, alt: "Continuing & Community Education, AUK" },
+  { src: aukLogo, alt: "American University of Kuwait" },
+  { src: kfasLogo, alt: "Kuwait Foundation for the Advancement of Sciences" },
+  { src: boubyanLogo, alt: "Boubyan Bank" },
+  { src: aasuLogo, alt: "Abdullah Al Salem University" },
+];
 
 const STATS = [
   { value: "15+", label: "Years of Experience" },
@@ -199,6 +212,30 @@ export default function InstructorSlide({ data: _data }: { data: HeartData[] }) 
           Research aligned with institutional strategy, national priorities, and the UN
           Sustainable Development Goals
         </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.85 }}
+          className="flex items-center gap-3 mt-3.5 pt-3.5 border-t border-border/60"
+        >
+          <p className="flex-none text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-semibold">
+            In partnership with
+          </p>
+          <div className="flex items-center gap-2">
+            {PARTNERS.map((p, i) => (
+              <motion.div
+                key={p.alt}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9 + i * 0.06 }}
+                className="h-9 rounded-lg border border-border/60 bg-white shadow-sm px-2.5 py-1 flex items-center"
+              >
+                <img src={p.src} alt={p.alt} className="h-full w-auto max-w-[84px] object-contain" />
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
 
       <AnimatePresence>
