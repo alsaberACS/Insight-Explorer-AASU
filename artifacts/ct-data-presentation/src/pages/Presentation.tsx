@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useHeartData } from "@/hooks/use-heart-data";
 import SlideNavigator, { SlideSection } from "@/components/SlideNavigator";
+import cceAukLogo from "@assets/CCE-AUK_New_Logo_2025_1783853383917.jpeg";
 
 import TitleSlide from "@/components/slides/TitleSlide";
 import InstructorSlide from "@/components/slides/InstructorSlide";
@@ -263,6 +264,14 @@ export default function Presentation() {
             )}
           </motion.div>
         </AnimatePresence>
+
+        {currentIndex >= 2 && currentIndex <= 45 && (
+          <img
+            src={cceAukLogo}
+            alt="Continuing & Community Education, AUK"
+            className="absolute top-4 right-5 h-9 w-auto object-contain opacity-80 pointer-events-none z-10"
+          />
+        )}
       </main>
 
       <AnimatePresence>
