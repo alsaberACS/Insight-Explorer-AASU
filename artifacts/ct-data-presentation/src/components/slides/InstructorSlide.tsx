@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
-import { GraduationCap, BookOpen, Quote, FileText, QrCode } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { GraduationCap, BookOpen, Quote, FileText, QrCode, ZoomIn, X } from "lucide-react";
 import { HeartData } from "@/lib/data";
 import instructorPhoto from "@assets/AhmadPic_1783851304239.png";
 import cvQrCode from "@assets/Alsaber_CV_1783851372621.png";
@@ -29,8 +30,10 @@ const EDUCATION = [
 ];
 
 export default function InstructorSlide({ data: _data }: { data: HeartData[] }) {
+  const [qrOpen, setQrOpen] = useState(false);
+
   return (
-    <div className="w-full max-w-6xl mx-auto h-full flex items-center gap-10">
+    <div className="relative w-full max-w-6xl mx-auto h-full flex items-center gap-10">
       <motion.div
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
@@ -54,11 +57,24 @@ export default function InstructorSlide({ data: _data }: { data: HeartData[] }) 
           transition={{ delay: 0.4 }}
           className="relative -mt-2 flex items-center gap-3.5 rounded-2xl border border-primary/30 bg-card shadow-lg px-4 py-3 transition-colors hover:border-primary hover:bg-primary/5"
         >
-          <img
-            src={cvQrCode}
-            alt="QR code linking to full CV"
-            className="w-[86px] h-[86px] rounded-lg border border-border bg-white p-1"
-          />
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setQrOpen(true);
+            }}
+            aria-label="Enlarge QR code"
+            className="group relative flex-none rounded-lg border border-border bg-white p-1 transition-shadow hover:shadow-md"
+          >
+            <img
+              src={cvQrCode}
+              alt="QR code linking to full CV"
+              className="w-[78px] h-[78px]"
+            />
+            <span className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/0 opacity-0 transition-opacity group-hover:bg-black/35 group-hover:opacity-100">
+              <ZoomIn className="w-5 h-5 text-white" />
+            </span>
+          </button>
           <div>
             <p className="flex items-center gap-1.5 text-sm font-bold text-primary">
               <QrCode className="w-4 h-4" />
@@ -184,6 +200,45 @@ export default function InstructorSlide({ data: _data }: { data: HeartData[] }) 
           Sustainable Development Goals
         </motion.p>
       </div>
+
+      <AnimatePresence>
+        {qrOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setQrOpen(false)}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 300, damping: 26 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative rounded-3xl bg-white shadow-2xl p-8 flex flex-col items-center"
+            >
+              <button
+                onClick={() => setQrOpen(false)}
+                aria-label="Close enlarged QR code"
+                className="absolute top-3 right-3 rounded-full border border-slate-200 bg-white p-1.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-800"
+              >
+                <X className="w-4 h-4" />
+              </button>
+              <img
+                src={cvQrCode}
+                alt="QR code linking to full CV, enlarged"
+                className="w-[380px] h-[380px]"
+              />
+              <p className="flex items-center gap-2 text-base font-bold text-slate-800 mt-2">
+                <QrCode className="w-5 h-5 text-primary" />
+                Scan to open the full CV
+              </p>
+              <p className="text-sm text-slate-500 mt-1">alsaber.acs-kw.com</p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
