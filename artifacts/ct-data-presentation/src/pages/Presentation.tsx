@@ -146,6 +146,7 @@ export default function Presentation() {
   const [exporting, setExporting] = useState(false);
   const [exportStep, setExportStep] = useState(0);
   const mainRef = React.useRef<HTMLElement>(null);
+  const stageRef = React.useRef<HTMLDivElement>(null);
   const { data, loading, error } = useHeartData();
   const { scale, width } = useStageScale();
 
@@ -154,7 +155,7 @@ export default function Presentation() {
     const startIndex = currentIndex;
     setExporting(true);
     try {
-      const [{ toPng, getFontEmbedCSS }, pptxMod] = await Promise.all([
+      const [{ toJpeg, getFontEmbedCSS }, pptxMod] = await Promise.all([
         import("html-to-image"),
         import("pptxgenjs"),
       ]);
@@ -175,43 +176,55 @@ export default function Presentation() {
         }
       }
 
+      try {
+        await document.fonts.ready;
+      } catch {
+        // ignore
+      }
+
+      const waitForImages = async (el: HTMLElement) => {
+        const imgs = Array.from(el.querySelectorAll("img"));
+        await Promise.all(
+          imgs.map(async (im) => {
+            if (im.complete && im.naturalWidth > 0) return;
+            await Promise.race([
+              im.decode().catch(
+                () =>
+                  new Promise<void>((res) => {
+                    im.addEventListener("load", () => res(), { once: true });
+                    im.addEventListener("error", () => res(), { once: true });
+                  }),
+              ),
+              new Promise<void>((res) => setTimeout(res, 5000)),
+            ]);
+          }),
+        );
+      };
+
       for (let i = 0; i < SLIDES.length; i++) {
         setExportStep(i + 1);
         setCurrentIndex(i);
-        await new Promise((r) => setTimeout(r, 2100));
-        const el = mainRef.current;
+        // wait for the previous slide to exit and the new one to mount
+        await new Promise((r) => setTimeout(r, 1000));
+        const el = stageRef.current;
         if (!el) {
           throw new Error(`Could not capture slide ${i + 1}`);
         }
-        const dataUrl = await toPng(el, {
+        // make sure every picture on the slide has fully loaded
+        await waitForImages(el);
+        // let staggered entry animations finish
+        await new Promise((r) => setTimeout(r, 1600));
+        const dataUrl = await toJpeg(el, {
           backgroundColor: bg,
-          pixelRatio: Math.min(2, 1600 / el.clientWidth),
+          pixelRatio: 1.5,
+          quality: 0.92,
           fontEmbedCSS,
+          style: { transform: "none" },
+          width: STAGE_W,
+          height: STAGE_H,
         });
-        const img = new Image();
-        await new Promise<void>((res, rej) => {
-          img.onload = () => res();
-          img.onerror = () => rej(new Error("capture failed"));
-          img.src = dataUrl;
-        });
-        const slideAr = 13.333 / 7.5;
-        const imgAr = img.width / img.height;
-        let w = 13.333;
-        let h = 7.5;
-        if (imgAr > slideAr) {
-          h = 13.333 / imgAr;
-        } else {
-          w = 7.5 * imgAr;
-        }
         const slide = pptx.addSlide();
-        slide.background = { color: "F8FAFC" };
-        slide.addImage({
-          data: dataUrl,
-          x: (13.333 - w) / 2,
-          y: (7.5 - h) / 2,
-          w,
-          h,
-        });
+        slide.addImage({ data: dataUrl, x: 0, y: 0, w: 13.333, h: 7.5 });
       }
 
       await pptx.writeFile({
@@ -226,7 +239,7 @@ export default function Presentation() {
       setExportStep(0);
     }
   };
-  const useStage = width < 1024 && scale < 0.98;
+  const useStage = exporting || (width < 1024 && scale < 0.98);
 
   useEffect(() => {
     if (navOpen || exporting) return;
@@ -330,7 +343,8 @@ export default function Presentation() {
           >
             {useStage ? (
               <div
-                className="flex-none flex items-center justify-center p-16"
+                ref={stageRef}
+                className="relative flex-none flex items-center justify-center p-16"
                 style={{
                   width: STAGE_W,
                   height: STAGE_H,
@@ -339,6 +353,13 @@ export default function Presentation() {
                 }}
               >
                 {data && <CurrentSlide data={data} />}
+                {currentIndex >= 2 && currentIndex <= 45 && (
+                  <img
+                    src={cceAukLogo}
+                    alt="Continuing & Community Education, AUK"
+                    className="absolute top-4 right-5 h-9 w-auto object-contain opacity-80 pointer-events-none z-10"
+                  />
+                )}
               </div>
             ) : (
               data && <CurrentSlide data={data} />
@@ -346,7 +367,7 @@ export default function Presentation() {
           </motion.div>
         </AnimatePresence>
 
-        {currentIndex >= 2 && currentIndex <= 45 && (
+        {!useStage && currentIndex >= 2 && currentIndex <= 45 && (
           <img
             src={cceAukLogo}
             alt="Continuing & Community Education, AUK"
