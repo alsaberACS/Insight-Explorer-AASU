@@ -111,15 +111,16 @@ function useStageScale() {
       window.removeEventListener("orientationchange", onResize);
     };
   }, []);
-  return Math.min(size.w / STAGE_W, (size.h - FOOTER_H) / STAGE_H);
+  const scale = Math.min(size.w / STAGE_W, (size.h - FOOTER_H) / STAGE_H);
+  return { scale, width: size.w };
 }
 
 export default function Presentation() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [navOpen, setNavOpen] = useState(false);
   const { data, loading, error } = useHeartData();
-  const scale = useStageScale();
-  const useStage = scale < 0.98;
+  const { scale, width } = useStageScale();
+  const useStage = width < 1024 && scale < 0.98;
 
   useEffect(() => {
     if (navOpen) return;
