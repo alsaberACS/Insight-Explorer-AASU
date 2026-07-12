@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, LayoutGrid } from "lucide-react";
+import { ChevronLeft, ChevronRight, LayoutGrid, Download, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useHeartData } from "@/hooks/use-heart-data";
@@ -143,12 +143,93 @@ function useStageScale() {
 export default function Presentation() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [navOpen, setNavOpen] = useState(false);
+  const [exporting, setExporting] = useState(false);
+  const [exportStep, setExportStep] = useState(0);
+  const mainRef = React.useRef<HTMLElement>(null);
   const { data, loading, error } = useHeartData();
   const { scale, width } = useStageScale();
+
+  const exportToPpt = async () => {
+    if (exporting) return;
+    const startIndex = currentIndex;
+    setExporting(true);
+    try {
+      const [{ toPng, getFontEmbedCSS }, pptxMod] = await Promise.all([
+        import("html-to-image"),
+        import("pptxgenjs"),
+      ]);
+      const PptxGenJS = pptxMod.default;
+      const pptx = new PptxGenJS();
+      pptx.defineLayout({ name: "WIDE", width: 13.333, height: 7.5 });
+      pptx.layout = "WIDE";
+
+      const bg =
+        getComputedStyle(document.body).backgroundColor || "#ffffff";
+
+      let fontEmbedCSS = "";
+      if (mainRef.current) {
+        try {
+          fontEmbedCSS = await getFontEmbedCSS(mainRef.current);
+        } catch (fontErr) {
+          console.warn("Font embedding skipped", fontErr);
+        }
+      }
+
+      for (let i = 0; i < SLIDES.length; i++) {
+        setExportStep(i + 1);
+        setCurrentIndex(i);
+        await new Promise((r) => setTimeout(r, 2100));
+        const el = mainRef.current;
+        if (!el) {
+          throw new Error(`Could not capture slide ${i + 1}`);
+        }
+        const dataUrl = await toPng(el, {
+          backgroundColor: bg,
+          pixelRatio: Math.min(2, 1600 / el.clientWidth),
+          fontEmbedCSS,
+        });
+        const img = new Image();
+        await new Promise<void>((res, rej) => {
+          img.onload = () => res();
+          img.onerror = () => rej(new Error("capture failed"));
+          img.src = dataUrl;
+        });
+        const slideAr = 13.333 / 7.5;
+        const imgAr = img.width / img.height;
+        let w = 13.333;
+        let h = 7.5;
+        if (imgAr > slideAr) {
+          h = 13.333 / imgAr;
+        } else {
+          w = 7.5 * imgAr;
+        }
+        const slide = pptx.addSlide();
+        slide.background = { color: "F8FAFC" };
+        slide.addImage({
+          data: dataUrl,
+          x: (13.333 - w) / 2,
+          y: (7.5 - h) / 2,
+          w,
+          h,
+        });
+      }
+
+      await pptx.writeFile({
+        fileName: "Computational-Thinking-and-Data-Analysis.pptx",
+      });
+    } catch (err) {
+      console.error("PPT export failed", err);
+      window.alert("Sorry, the PowerPoint export failed. Please try again.");
+    } finally {
+      setCurrentIndex(startIndex);
+      setExporting(false);
+      setExportStep(0);
+    }
+  };
   const useStage = width < 1024 && scale < 0.98;
 
   useEffect(() => {
-    if (navOpen) return;
+    if (navOpen || exporting) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null;
       const inTextField =
@@ -171,10 +252,10 @@ export default function Presentation() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [navOpen]);
+  }, [navOpen, exporting]);
 
   useEffect(() => {
-    if (navOpen) return;
+    if (navOpen || exporting) return;
     let startX = 0;
     let startY = 0;
     let startTime = 0;
@@ -210,7 +291,7 @@ export default function Presentation() {
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchend", onTouchEnd);
     };
-  }, [navOpen]);
+  }, [navOpen, exporting]);
 
   if (loading) {
     return (
@@ -233,7 +314,7 @@ export default function Presentation() {
 
   return (
     <div className="min-h-[100dvh] w-full bg-background flex flex-col overflow-hidden select-none relative">
-      <main className="flex-1 relative">
+      <main ref={mainRef} className="flex-1 relative">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -281,6 +362,7 @@ export default function Presentation() {
             sections={SECTIONS}
             currentIndex={currentIndex}
             onJump={(idx) => {
+              if (exporting) return;
               setCurrentIndex(idx);
               setNavOpen(false);
             }}
@@ -293,9 +375,10 @@ export default function Presentation() {
         <div className="flex items-center gap-4">
           <button
             onClick={() => setNavOpen((v) => !v)}
+            disabled={exporting}
             aria-label="Open slide navigator"
             aria-expanded={navOpen}
-            className="flex items-center gap-2 rounded-full border border-border/50 px-3 h-10 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+            className="flex items-center gap-2 rounded-full border border-border/50 px-3 h-10 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors disabled:opacity-50 disabled:pointer-events-none"
           >
             <LayoutGrid className="h-4 w-4" />
             {currentIndex + 1} / {SLIDES.length}
@@ -308,9 +391,31 @@ export default function Presentation() {
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
+            onClick={exportToPpt}
+            disabled={exporting}
+            title="Download all slides as PowerPoint"
+            aria-label="Download all slides as PowerPoint"
+            className="rounded-full h-10 border-border/50 hover:bg-muted px-3 text-sm font-medium text-muted-foreground gap-2"
+          >
+            {exporting ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span className="hidden sm:inline">
+                  Exporting {exportStep} / {SLIDES.length}
+                </span>
+              </>
+            ) : (
+              <>
+                <Download className="h-4 w-4" />
+                <span className="hidden sm:inline">PPT</span>
+              </>
+            )}
+          </Button>
+          <Button
+            variant="outline"
             size="icon"
             onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
-            disabled={currentIndex === 0}
+            disabled={currentIndex === 0 || exporting}
             className="rounded-full h-10 w-10 border-border/50 hover:bg-muted"
           >
             <ChevronLeft className="h-5 w-5" />
@@ -319,7 +424,7 @@ export default function Presentation() {
             variant="outline"
             size="icon"
             onClick={() => setCurrentIndex((prev) => Math.min(prev + 1, SLIDES.length - 1))}
-            disabled={currentIndex === SLIDES.length - 1}
+            disabled={currentIndex === SLIDES.length - 1 || exporting}
             className="rounded-full h-10 w-10 border-border/50 hover:bg-muted"
           >
             <ChevronRight className="h-5 w-5" />
