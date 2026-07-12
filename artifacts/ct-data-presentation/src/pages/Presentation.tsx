@@ -7,6 +7,7 @@ import { useHeartData } from "@/hooks/use-heart-data";
 import SlideNavigator, { SlideSection } from "@/components/SlideNavigator";
 
 import TitleSlide from "@/components/slides/TitleSlide";
+import InstructorSlide from "@/components/slides/InstructorSlide";
 import GoalOneSlide from "@/components/slides/GoalOneSlide";
 import WorkshopPurposeSlide from "@/components/slides/WorkshopPurposeSlide";
 import CLOsSlide from "@/components/slides/CLOsSlide";
@@ -56,6 +57,7 @@ import {
 
 const SLIDE_DEFS: { component: (props: { data: import("@/lib/data").HeartData[] }) => React.JSX.Element; title: string }[] = [
   { component: TitleSlide, title: "Welcome" },
+  { component: InstructorSlide, title: "Your Instructor" },
   { component: GoalOneSlide, title: "Goal 1 — Overview" },
   { component: WorkshopPurposeSlide, title: "Workshop Purpose" },
   { component: CLOsSlide, title: "Course Learning Outcomes" },
@@ -106,13 +108,13 @@ const SLIDES = SLIDE_DEFS.map((s) => s.component);
 const SLIDE_TITLES = SLIDE_DEFS.map((s) => s.title);
 
 const SECTIONS: SlideSection[] = [
-  { label: "Getting Started", start: 0, count: 1 },
-  { label: "Goal 1 · Course Foundations", start: 1, count: 6 },
-  { label: "Goal 2 · Methodologies", start: 7, count: 5 },
-  { label: "Goal 3 · Computational Thinking & R", start: 12, count: 5 },
-  { label: "Goal 4 · Dealing with Data", start: 17, count: 8 },
-  { label: "Goal 5 · EDA & Visualization", start: 25, count: 8 },
-  { label: "Goal 6 · Hands-On with RStudio", start: 33, count: 12 },
+  { label: "Getting Started", start: 0, count: 2 },
+  { label: "Goal 1 · Course Foundations", start: 2, count: 6 },
+  { label: "Goal 2 · Methodologies", start: 8, count: 5 },
+  { label: "Goal 3 · Computational Thinking & R", start: 13, count: 5 },
+  { label: "Goal 4 · Dealing with Data", start: 18, count: 8 },
+  { label: "Goal 5 · EDA & Visualization", start: 26, count: 8 },
+  { label: "Goal 6 · Hands-On with RStudio", start: 34, count: 12 },
 ];
 
 const STAGE_W = 1280;
