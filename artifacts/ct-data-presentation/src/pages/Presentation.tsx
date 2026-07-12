@@ -45,6 +45,7 @@ import ReadDataSlide from "@/components/slides/ReadDataSlide";
 import RLibrarySlide from "@/components/slides/RLibrarySlide";
 import RLibraryDiscoverSlide from "@/components/slides/RLibraryDiscoverSlide";
 import AnalystQuestionsSlide from "@/components/slides/AnalystQuestionsSlide";
+import StatTestsSlide from "@/components/slides/StatTestsSlide";
 import {
   RExploreSlide,
   RCompareSlide,
@@ -95,6 +96,7 @@ const SLIDE_DEFS: { component: (props: { data: import("@/lib/data").HeartData[] 
   { component: RLibrarySlide, title: "Dealing with R Libraries" },
   { component: RLibraryDiscoverSlide, title: "Finding the Right Library" },
   { component: AnalystQuestionsSlide, title: "Think Like a Data Analyst" },
+  { component: StatTestsSlide, title: "The Statistical Test Toolbox" },
   { component: RExploreSlide, title: "Q1 in R: Explore the Data" },
   { component: RCompareSlide, title: "Q2 in R: Compare Groups" },
   { component: RAssociateSlide, title: "Q3 in R: Association" },
@@ -114,8 +116,8 @@ const SECTIONS: SlideSection[] = [
   { label: "Goal 3 · Computational Thinking & R", start: 12, count: 5 },
   { label: "Goal 4 · Dealing with Data", start: 17, count: 8 },
   { label: "Goal 5 · EDA & Visualization", start: 25, count: 8 },
-  { label: "Goal 6 · Hands-On with RStudio", start: 33, count: 12 },
-  { label: "Wrap-Up", start: 45, count: 1 },
+  { label: "Goal 6 · Hands-On with RStudio", start: 33, count: 13 },
+  { label: "Wrap-Up", start: 46, count: 1 },
 ];
 
 const STAGE_W = 1280;
