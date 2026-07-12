@@ -128,26 +128,42 @@ export default function ProjectSetupSlide({ data: _data }: { data: HeartData[] }
                   <span className="flex-none w-11 h-11 rounded-xl bg-primary/15 text-primary flex items-center justify-center">
                     <Database className="w-5 h-5" />
                   </span>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <h4 className="font-bold">heart.csv — the dataset</h4>
                     <p className="text-sm text-foreground/75">
                       Kaggle: &ldquo;Heart Disease Dataset&rdquo; — 1,025 patient records, 14
-                      clinical variables. Click Download on the dataset page.
+                      clinical variables.
                     </p>
                   </div>
+                  <a
+                    href={`${import.meta.env.BASE_URL}heart.csv`}
+                    download="heart.csv"
+                    className="flex-none inline-flex items-center gap-1.5 rounded-lg bg-primary text-primary-foreground text-sm font-semibold px-3.5 py-2 hover:bg-primary/90 transition-colors"
+                  >
+                    <Download className="w-4 h-4" />
+                    Download
+                  </a>
                 </div>
                 <div className="flex items-center gap-4 rounded-xl border border-primary/25 bg-primary/5 p-4">
                   <span className="flex-none w-11 h-11 rounded-xl bg-primary/15 text-primary flex items-center justify-center">
                     <FileText className="w-5 h-5" />
                   </span>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <h4 className="font-bold">The codebook — the dictionary</h4>
                     <p className="text-sm text-foreground/75">
-                      The dataset page describes every column: what <em>cp</em>, <em>thalach</em>,
-                      and <em>ca</em> mean, their units, and their valid codes. Data without a
-                      codebook is just numbers.
+                      Describes every column: what <em>cp</em>, <em>thalach</em>, and <em>ca</em>{" "}
+                      mean, their units, and their valid codes. Data without a codebook is just
+                      numbers.
                     </p>
                   </div>
+                  <a
+                    href={`${import.meta.env.BASE_URL}codebook.txt`}
+                    download="codebook.txt"
+                    className="flex-none inline-flex items-center gap-1.5 rounded-lg bg-primary text-primary-foreground text-sm font-semibold px-3.5 py-2 hover:bg-primary/90 transition-colors"
+                  >
+                    <Download className="w-4 h-4" />
+                    Download
+                  </a>
                 </div>
                 <p className="text-sm text-muted-foreground italic text-center">
                   Rule one of data analysis: never work with a dataset you cannot decode.

@@ -1,0 +1,58 @@
+HEART DISEASE DATASET - CODEBOOK
+================================
+Source: Kaggle "Heart Disease Dataset" (based on the UCI Cleveland database)
+Rows: 1,025 patient records | Columns: 14 clinical variables
+
+VARIABLE    DESCRIPTION                                          VALUES / UNITS
+--------    -----------                                          --------------
+age         Age of the patient                                   years (29-77)
+
+sex         Biological sex                                       1 = male
+                                                                 0 = female
+
+cp          Chest pain type                                      0 = typical angina
+                                                                 1 = atypical angina
+                                                                 2 = non-anginal pain
+                                                                 3 = asymptomatic
+
+trestbps    Resting blood pressure on admission                  mm Hg (94-200)
+
+chol        Serum cholesterol                                    mg/dl (126-564)
+
+fbs         Fasting blood sugar > 120 mg/dl                      1 = true
+                                                                 0 = false
+
+restecg     Resting electrocardiographic results                 0 = normal
+                                                                 1 = ST-T wave abnormality
+                                                                 2 = left ventricular hypertrophy
+
+thalach     Maximum heart rate achieved                          beats per minute (71-202)
+
+exang       Exercise-induced angina                              1 = yes
+                                                                 0 = no
+
+oldpeak     ST depression induced by exercise                    numeric (0.0-6.2)
+            relative to rest
+
+slope       Slope of the peak exercise ST segment                0 = upsloping
+                                                                 1 = flat
+                                                                 2 = downsloping
+
+ca          Number of major vessels colored by                   0-3 (valid)
+            fluoroscopy                                          4 = error code (remove)
+
+thal        Thalassemia test result                              1 = normal
+                                                                 2 = fixed defect
+                                                                 3 = reversible defect
+                                                                 0 = error code (remove)
+
+target      Presence of heart disease (outcome)                  1 = disease
+                                                                 0 = no disease
+
+DATA QUALITY NOTES
+------------------
+- The 1,025 rows contain exact duplicates: 302 unique patients remain
+  after deduplication.
+- ca = 4 and thal = 0 are error codes from the original study and
+  should be excluded (296 valid records remain).
+- No missing values (NA) are present in this version of the dataset.
