@@ -4,6 +4,19 @@ import { Heart, QrCode, ZoomIn, X, ClipboardCheck, Globe } from "lucide-react";
 import { HeartData } from "@/lib/data";
 import instructorPhoto from "@assets/AhmadPic_1783852171406.png";
 import evaluationQr from "@assets/CCE_Evaluation_QR_Computational_Thinking_and_Data_Analysis_1783852164133.png";
+import aukLogo from "@assets/auk-logo_1783852445171.jpeg";
+import cceLogo from "@assets/CCE-AUK_New_Logo_2025_1783852445171.jpeg";
+import kfasLogo from "@assets/KFAS_Logo_new_1754250510135_1783852445171.png";
+import boubyanLogo from "@assets/BoubyanBankLogo_(1).svg_1783852445171.png";
+import aasuLogo from "@assets/logorightcolor_1783852445171.png";
+
+const PARTNERS = [
+  { src: cceLogo, alt: "Continuing & Community Education, AUK" },
+  { src: aukLogo, alt: "American University of Kuwait" },
+  { src: kfasLogo, alt: "Kuwait Foundation for the Advancement of Sciences" },
+  { src: boubyanLogo, alt: "Boubyan Bank" },
+  { src: aasuLogo, alt: "Abdullah Al Salem University" },
+];
 
 export default function ThankYouSlide({ data: _data }: { data: HeartData[] }) {
   const [qrOpen, setQrOpen] = useState(false);
@@ -68,12 +81,36 @@ export default function ThankYouSlide({ data: _data }: { data: HeartData[] }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="flex items-center gap-2 text-sm text-muted-foreground mt-8"
+          className="flex items-center gap-2 text-sm text-muted-foreground mt-6"
         >
           <Heart className="w-4 h-4 text-primary" />
           Built around 1,025 real patient records — because data analysis is best
           learned by doing.
         </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.75 }}
+          className="mt-6"
+        >
+          <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground font-semibold mb-2.5">
+            In partnership with
+          </p>
+          <div className="flex items-center gap-2.5">
+            {PARTNERS.map((p, i) => (
+              <motion.div
+                key={p.alt}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 + i * 0.07 }}
+                className="h-11 rounded-lg border border-border/60 bg-white shadow-sm px-3 py-1.5 flex items-center"
+              >
+                <img src={p.src} alt={p.alt} className="h-full w-auto max-w-[96px] object-contain" />
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
 
       <motion.div
