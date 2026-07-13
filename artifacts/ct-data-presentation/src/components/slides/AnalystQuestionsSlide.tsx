@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Scale, Link2, TrendingUp, Award } from "lucide-react";
+import { Search, Scale, Link2, TrendingUp, Award, Download } from "lucide-react";
 import { HeartData } from "@/lib/data";
 
 const QUESTIONS = [
@@ -93,30 +93,43 @@ export default function AnalystQuestionsSlide({ data: _data }: { data: HeartData
 
   return (
     <div className="w-full max-w-6xl mx-auto h-full flex flex-col justify-center">
-      <div className="mb-4">
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-sm uppercase tracking-[0.25em] text-primary font-semibold mb-1"
-        >
-          Goal 6 · Hands-On
-        </motion.p>
-        <motion.h2
+      <div className="mb-4 flex items-end justify-between gap-6">
+        <div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-sm uppercase tracking-[0.25em] text-primary font-semibold mb-1"
+          >
+            Goal 6 · Hands-On
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-3xl md:text-4xl font-bold mb-1"
+          >
+            Think Like a Data Analyst
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.15 }}
+            className="text-base text-muted-foreground"
+          >
+            Five questions turn 1,025 rows into clinical insight — each one summons its own
+            statistical tool.
+          </motion.p>
+        </div>
+        <motion.a
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-3xl md:text-4xl font-bold mb-1"
+          transition={{ delay: 0.25 }}
+          href={`${import.meta.env.BASE_URL}code1.R`}
+          download="analysis.R"
+          className="flex-none inline-flex items-center gap-2 rounded-xl border border-primary/40 bg-primary/10 text-primary font-semibold text-sm px-4 py-2.5 hover:bg-primary hover:text-primary-foreground transition-colors shadow-sm"
         >
-          Think Like a Data Analyst
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.15 }}
-          className="text-base text-muted-foreground"
-        >
-          Five questions turn 1,025 rows into clinical insight — each one summons its own
-          statistical tool.
-        </motion.p>
+          <Download className="w-4 h-4" />
+          Download the R script
+        </motion.a>
       </div>
 
       <div className="flex gap-6 flex-1 min-h-0 max-h-[470px]">
