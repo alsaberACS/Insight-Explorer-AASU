@@ -1,0 +1,105 @@
+library(tidyverse)
+
+# Step 1 read the data
+df1 <- read_csv("df1.csv")
+glimpse(df1)
+
+# Step 2 read the Codebook
+codebook <- read_csv("code1.csv")
+codebook
+
+# Step 3 attach codebook definitions to df1 as column labels
+labels <- codebook$meaning[match(names(df1), codebook$variable)]
+units <- codebook$codes_units[match(names(df1), codebook$variable)]
+
+for (i in seq_along(df1)) {
+  attr(df1[[i]], "label") <- labels[i]
+  attr(df1[[i]], "codes_units") <- units[i]
+}
+
+# Confirm each column now carries its definition
+tibble(
+  variable = names(df1),
+  label = labels,
+  codes_units = units
+)
+
+# Step 4 describe sex
+df1 |>
+  count(sex) |>
+  mutate(
+    label = if_else(sex == 0, "Female", "Male"),
+    proportion = n / sum(n)
+  )
+
+# Step 5 define the answer codes as labeled factors
+df1_lab <- df1 |>
+  mutate(
+    sex     = factor(sex, levels = c(0, 1),
+                     labels = c("F", "M")),
+    cp      = factor(cp, levels = c(0, 1, 2, 3),
+                     labels = c("Typical angina", "Atypical angina",
+                                "Non-anginal pain", "Asymptomatic")),
+    fbs     = factor(fbs, levels = c(0, 1),
+                     labels = c("No", "Yes")),
+    restecg = factor(restecg, levels = c(0, 1, 2),
+                     labels = c("Normal", "ST-T wave abnormality",
+                                "LV hypertrophy")),
+    exang   = factor(exang, levels = c(0, 1),
+                     labels = c("No", "Yes")),
+    slope   = factor(slope, levels = c(0, 1, 2),
+                     labels = c("Upsloping", "Flat", "Downsloping")),
+    # 4 is an invalid code -> becomes NA
+    ca      = factor(ca, levels = c(0, 1, 2, 3)),
+    # 0 is an invalid code -> becomes NA
+    thal    = factor(thal, levels = c(1, 2, 3),
+                     labels = c("Normal", "Fixed defect",
+                                "Reversible defect")),
+    target  = factor(target, levels = c(0, 1),
+                     labels = c("No disease", "Disease"))
+  )
+
+glimpse(df1_lab)
+
+# Step 6 demographic descriptives (age and sex only)
+
+# Age: continuous summary
+df1_lab |>
+  summarise(
+    n = sum(!is.na(age)),
+    mean = mean(age),
+    sd = sd(age),
+    median = median(age),
+    min = min(age),
+    max = max(age)
+  )
+
+# Sex: frequency and proportion
+df1_lab |>
+  count(sex) |>
+  mutate(proportion = n / sum(n))
+
+# Step 7 APA-formatted demographics table with gtsummary
+library(gtsummary)
+
+demo_table <- df1_lab |>
+  select(age, sex, target) |>
+  tbl_summary(
+    label = list(age ~ "Age (years)", sex ~ "Sex", target ~ "Heart Disease"),
+    statistic = list(
+      all_continuous() ~ "{mean} ({sd})",
+      all_categorical() ~ "{n} ({p}%)"
+    ),
+    digits = all_continuous() ~ 1
+  ) |>
+  modify_header(label ~ "**Characteristic**", stat_0 ~ "**N = {N}**") |>
+  add_stat_label() |>
+  modify_caption("**Table 1.** *Participant Demographic Characteristics*")
+
+demo_table
+
+# Step 8 export the formatted table to Word
+demo_table |>
+  as_flex_table() |>
+  flextable::save_as_docx(path = "demographics_table.docx")
+
