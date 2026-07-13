@@ -24,7 +24,6 @@ import GoalThreeSlide from "@/components/slides/GoalThreeSlide";
 import InstallRStudioSlide from "@/components/slides/InstallRStudioSlide";
 import RStudioEnvSlide from "@/components/slides/RStudioEnvSlide";
 import AlgorithmicThinkingSlide from "@/components/slides/AlgorithmicThinkingSlide";
-import CTHandsOnSlide from "@/components/slides/CTHandsOnSlide";
 import GoalFourSlide from "@/components/slides/GoalFourSlide";
 import VariableTypesSlide from "@/components/slides/VariableTypesSlide";
 import DataCollectionSlide from "@/components/slides/DataCollectionSlide";
@@ -73,7 +72,6 @@ const SLIDE_DEFS: { component: (props: { data: import("@/lib/data").HeartData[] 
   { component: InstallRStudioSlide, title: "Install R & RStudio" },
   { component: RStudioEnvSlide, title: "The RStudio Environment" },
   { component: AlgorithmicThinkingSlide, title: "Algorithmic Thinking" },
-  { component: CTHandsOnSlide, title: "The Four Pillars, Live in R" },
   { component: GoalFourSlide, title: "Goal 4 — Overview" },
   { component: VariableTypesSlide, title: "Variables & Their Types" },
   { component: DataCollectionSlide, title: "Data Collection" },
@@ -112,11 +110,11 @@ const SECTIONS: SlideSection[] = [
   { label: "Getting Started", start: 0, count: 2 },
   { label: "Goal 1 · Course Foundations", start: 2, count: 7 },
   { label: "Goal 2 · Methodologies", start: 9, count: 3 },
-  { label: "Goal 3 · Computational Thinking & R", start: 12, count: 5 },
-  { label: "Goal 4 · Dealing with Data", start: 17, count: 8 },
-  { label: "Goal 5 · EDA & Visualization", start: 25, count: 8 },
-  { label: "Goal 6 · Hands-On with RStudio", start: 33, count: 12 },
-  { label: "Wrap-Up", start: 45, count: 1 },
+  { label: "Goal 3 · Computational Thinking & R", start: 12, count: 4 },
+  { label: "Goal 4 · Dealing with Data", start: 16, count: 8 },
+  { label: "Goal 5 · EDA & Visualization", start: 24, count: 8 },
+  { label: "Goal 6 · Hands-On with RStudio", start: 32, count: 12 },
+  { label: "Wrap-Up", start: 44, count: 1 },
 ];
 
 const STAGE_W = 1280;
@@ -351,7 +349,7 @@ export default function Presentation() {
                 }}
               >
                 {data && <CurrentSlide data={data} />}
-                {currentIndex >= 2 && currentIndex <= 44 && (
+                {currentIndex >= 2 && currentIndex <= 43 && (
                   <img
                     src={cceAukLogo}
                     alt="Continuing & Community Education, AUK"
@@ -365,7 +363,7 @@ export default function Presentation() {
           </motion.div>
         </AnimatePresence>
 
-        {!useStage && currentIndex >= 2 && currentIndex <= 44 && (
+        {!useStage && currentIndex >= 2 && currentIndex <= 43 && (
           <img
             src={cceAukLogo}
             alt="Continuing & Community Education, AUK"
