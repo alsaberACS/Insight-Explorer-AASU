@@ -14,6 +14,7 @@ import GoalOneSlide from "@/components/slides/GoalOneSlide";
 import WorkshopPurposeSlide from "@/components/slides/WorkshopPurposeSlide";
 import CLOsSlide from "@/components/slides/CLOsSlide";
 import CourseToolboxSlide from "@/components/slides/CourseToolboxSlide";
+import CpdaSlide from "@/components/slides/CpdaSlide";
 import DefinitionsSlide from "@/components/slides/DefinitionsSlide";
 import DataEcosystemSlide from "@/components/slides/DataEcosystemSlide";
 import GoalTwoSlide from "@/components/slides/GoalTwoSlide";
@@ -64,6 +65,7 @@ const SLIDE_DEFS: { component: (props: { data: import("@/lib/data").HeartData[] 
   { component: WorkshopPurposeSlide, title: "Workshop Purpose" },
   { component: CLOsSlide, title: "Course Learning Outcomes" },
   { component: CourseToolboxSlide, title: "Software, Languages & Packages" },
+  { component: CpdaSlide, title: "CPDA Certification Pathway" },
   { component: DefinitionsSlide, title: "Key Definitions" },
   { component: DataEcosystemSlide, title: "The Data Ecosystem" },
   { component: GoalTwoSlide, title: "Goal 2 — Overview" },
@@ -112,13 +114,13 @@ const SLIDE_TITLES = SLIDE_DEFS.map((s) => s.title);
 
 const SECTIONS: SlideSection[] = [
   { label: "Getting Started", start: 0, count: 2 },
-  { label: "Goal 1 · Course Foundations", start: 2, count: 6 },
-  { label: "Goal 2 · Methodologies", start: 8, count: 5 },
-  { label: "Goal 3 · Computational Thinking & R", start: 13, count: 5 },
-  { label: "Goal 4 · Dealing with Data", start: 18, count: 8 },
-  { label: "Goal 5 · EDA & Visualization", start: 26, count: 8 },
-  { label: "Goal 6 · Hands-On with RStudio", start: 34, count: 12 },
-  { label: "Wrap-Up", start: 46, count: 1 },
+  { label: "Goal 1 · Course Foundations", start: 2, count: 7 },
+  { label: "Goal 2 · Methodologies", start: 9, count: 5 },
+  { label: "Goal 3 · Computational Thinking & R", start: 14, count: 5 },
+  { label: "Goal 4 · Dealing with Data", start: 19, count: 8 },
+  { label: "Goal 5 · EDA & Visualization", start: 27, count: 8 },
+  { label: "Goal 6 · Hands-On with RStudio", start: 35, count: 12 },
+  { label: "Wrap-Up", start: 47, count: 1 },
 ];
 
 const STAGE_W = 1280;
@@ -353,7 +355,7 @@ export default function Presentation() {
                 }}
               >
                 {data && <CurrentSlide data={data} />}
-                {currentIndex >= 2 && currentIndex <= 45 && (
+                {currentIndex >= 2 && currentIndex <= 46 && (
                   <img
                     src={cceAukLogo}
                     alt="Continuing & Community Education, AUK"
@@ -367,7 +369,7 @@ export default function Presentation() {
           </motion.div>
         </AnimatePresence>
 
-        {!useStage && currentIndex >= 2 && currentIndex <= 45 && (
+        {!useStage && currentIndex >= 2 && currentIndex <= 46 && (
           <img
             src={cceAukLogo}
             alt="Continuing & Community Education, AUK"
