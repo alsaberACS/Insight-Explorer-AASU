@@ -88,7 +88,6 @@ const SLIDE_DEFS: { component: (props: { data: import("@/lib/data").HeartData[] 
   { component: DispersionSlide, title: "Measures of Dispersion" },
   { component: DataTableSlide, title: "The Data Table" },
   { component: RSetupSlide, title: "Defining the Data" },
-  { component: VizGuessSlide, title: "Guess the Chart" },
   { component: VizDashboardSlide, title: "Interactive Dashboards" },
   { component: GoalSixSlide, title: "Goal 6 — Overview" },
   { component: ProjectSetupSlide, title: "Set Up Your Project" },
@@ -102,6 +101,7 @@ const SLIDE_DEFS: { component: (props: { data: import("@/lib/data").HeartData[] 
   { component: RAssociateSlide, title: "Q3 in R: Association" },
   { component: REffectSlide, title: "Q4 in R: Measure Effects" },
   { component: RPredictSlide, title: "Q5 in R: Predict & Validate" },
+  { component: VizGuessSlide, title: "Guess the Chart" },
   { component: ThankYouSlide, title: "Thank You & Evaluation" },
 ];
 
@@ -114,8 +114,8 @@ const SECTIONS: SlideSection[] = [
   { label: "Goal 2 · Methodologies", start: 9, count: 3 },
   { label: "Goal 3 · Computational Thinking & R", start: 12, count: 5 },
   { label: "Goal 4 · Dealing with Data", start: 17, count: 8 },
-  { label: "Goal 5 · EDA & Visualization", start: 25, count: 8 },
-  { label: "Goal 6 · Hands-On with RStudio", start: 33, count: 12 },
+  { label: "Goal 5 · EDA & Visualization", start: 25, count: 7 },
+  { label: "Goal 6 · Hands-On with RStudio", start: 32, count: 13 },
   { label: "Wrap-Up", start: 45, count: 1 },
 ];
 
