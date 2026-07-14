@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, QrCode, ZoomIn, X, ClipboardCheck, Globe } from "lucide-react";
+import { Heart, QrCode, ZoomIn, X, ClipboardCheck, Globe, Download, FileText } from "lucide-react";
 import { HeartData } from "@/lib/data";
 import instructorPhoto from "@assets/AhmadPic_1783852171406.png";
 import evaluationQr from "@assets/CCE_Evaluation_QR_Computational_Thinking_and_Data_Analysis_1783852164133.png";
@@ -99,6 +99,19 @@ export default function ThankYouSlide({ data: _data }: { data: HeartData[] }) {
           Built around 1,025 real patient records — because data analysis is best
           learned by doing.
         </motion.p>
+
+        <motion.a
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+          href={`${import.meta.env.BASE_URL}workshop_log_with_prompts.docx`}
+          download="Workshop_Log_and_Prompts.docx"
+          className="mt-4 inline-flex items-center gap-2.5 rounded-xl border border-primary/40 bg-primary/10 text-primary font-semibold text-sm px-4 py-2.5 hover:bg-primary hover:text-primary-foreground transition-colors shadow-sm"
+        >
+          <FileText className="w-4 h-4" />
+          Download the full session log & prompts (Word)
+          <Download className="w-4 h-4" />
+        </motion.a>
 
         <motion.div
           initial={{ opacity: 0, y: 10 }}
