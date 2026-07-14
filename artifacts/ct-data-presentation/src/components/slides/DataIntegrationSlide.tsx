@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Download, FileSpreadsheet } from "lucide-react";
 import { HeartData } from "@/lib/data";
 
 type JoinType = "inner" | "left" | "right" | "full";
@@ -229,6 +230,42 @@ export default function DataIntegrationSlide({ data: _data }: { data: HeartData[
           </motion.div>
         </AnimatePresence>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+        className="mt-4 rounded-xl border border-primary/30 bg-primary/5 px-4 py-2.5 flex items-center gap-4"
+      >
+        <p className="text-sm text-foreground/85 leading-snug flex-1 min-w-0">
+          <span className="font-bold text-primary">Try it yourself:</span> two real store
+          datasets, 895 stores each, split across two files — join them by{" "}
+          <code className="font-mono text-[12px] bg-foreground/[0.06] border border-border rounded px-1 py-0.5">
+            Store ID
+          </code>{" "}
+          to link sales with store size.
+        </p>
+        <div className="flex-none flex items-center gap-2">
+          <a
+            href={`${import.meta.env.BASE_URL}stores1.csv`}
+            download="Stores1.csv"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-primary/40 bg-card text-primary font-semibold text-[13px] px-3 py-1.5 hover:bg-primary hover:text-primary-foreground transition-colors"
+          >
+            <FileSpreadsheet className="w-3.5 h-3.5" />
+            Stores1.csv
+            <Download className="w-3.5 h-3.5" />
+          </a>
+          <a
+            href={`${import.meta.env.BASE_URL}stores2.csv`}
+            download="Stores2.csv"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-primary/40 bg-card text-primary font-semibold text-[13px] px-3 py-1.5 hover:bg-primary hover:text-primary-foreground transition-colors"
+          >
+            <FileSpreadsheet className="w-3.5 h-3.5" />
+            Stores2.csv
+            <Download className="w-3.5 h-3.5" />
+          </a>
+        </div>
+      </motion.div>
     </div>
   );
 }
