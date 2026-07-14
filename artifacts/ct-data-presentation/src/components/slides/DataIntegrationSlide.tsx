@@ -238,12 +238,12 @@ export default function DataIntegrationSlide({ data: _data }: { data: HeartData[
         className="mt-4 rounded-xl border border-primary/30 bg-primary/5 px-4 py-2.5 flex items-center gap-4"
       >
         <p className="text-sm text-foreground/85 leading-snug flex-1 min-w-0">
-          <span className="font-bold text-primary">Try it yourself:</span> two real store
-          datasets, 895 stores each, split across two files — join them by{" "}
+          <span className="font-bold text-primary">Try it yourself:</span> join the two store
+          files by{" "}
           <code className="font-mono text-[12px] bg-foreground/[0.06] border border-border rounded px-1 py-0.5">
             Store ID
           </code>{" "}
-          to link sales with store size.
+          to link sales with store size — then explore the mall customers data on its own.
         </p>
         <div className="flex-none flex items-center gap-2">
           <a
@@ -262,6 +262,15 @@ export default function DataIntegrationSlide({ data: _data }: { data: HeartData[
           >
             <FileSpreadsheet className="w-3.5 h-3.5" />
             Stores2.csv
+            <Download className="w-3.5 h-3.5" />
+          </a>
+          <a
+            href={`${import.meta.env.BASE_URL}mall_customers.csv`}
+            download="Mall_Customers.csv"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-primary/40 bg-card text-primary font-semibold text-[13px] px-3 py-1.5 hover:bg-primary hover:text-primary-foreground transition-colors"
+          >
+            <FileSpreadsheet className="w-3.5 h-3.5" />
+            Mall_Customers.csv
             <Download className="w-3.5 h-3.5" />
           </a>
         </div>
